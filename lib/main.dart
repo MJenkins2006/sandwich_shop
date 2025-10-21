@@ -30,17 +30,19 @@ class OrderScreen extends StatefulWidget {
 class _OrderScreenState extends State<OrderScreen> {
   int _quantity = 0;
 
-void _increaseQuantity() {
-  if (_quantity < widget.maxQuantity) {
-    setState(() => _quantity++);
+  void _increaseQuantity() {
+    if (_quantity < widget.maxQuantity) {
+      setState(() => _quantity++);
+    }
   }
-}
 
-void _decreaseQuantity() {
-  if (_quantity > 0) {
-    setState(() => _quantity--);
+  void _decreaseQuantity() {
+    if (_quantity > 0) {
+      setState(() => _quantity--);
+    }
   }
-}
+
+  String orderNotes = '';
 
   @override
   Widget build(BuildContext context) {
@@ -63,12 +65,37 @@ void _decreaseQuantity() {
                   onPressed: _increaseQuantity,
                   child: const Text('Add'),
                 ),
+                const SizedBox(width: 16),
                 ElevatedButton(
                   onPressed: _decreaseQuantity,
                   child: const Text('Remove'),
                 ),
               ],
             ),
+            const SizedBox(height: 24),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 32.0),
+              child: TextField(
+                decoration: const InputDecoration(
+                  labelText: 'Order Notes',
+                  hintText: 'e.g., no onions, extra pickles',
+                  border: OutlineInputBorder(),
+                ),
+                onChanged: (value) {
+                  setState(() {
+                    orderNotes = value;
+                  });
+                },
+              ),
+            ),
+            if (orderNotes.isNotEmpty)
+              Padding(
+                padding: const EdgeInsets.only(top: 16.0),
+                child: Text(
+                  'Notes: $orderNotes',
+                  style: const TextStyle(fontStyle: FontStyle.italic),
+                ),
+              ),
           ],
         ),
       ),
