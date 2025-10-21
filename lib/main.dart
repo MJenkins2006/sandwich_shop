@@ -13,13 +13,8 @@ class App extends StatelessWidget {
       title: 'Sandwich Shop App',
       home: Scaffold(
         appBar: AppBar(title: const Text('Sandwich Counter')),
-        body: const Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            OrderItemDisplay(3, 'BLT'),
-            OrderItemDisplay(5, 'Club'),
-            OrderItemDisplay(2, 'Veggie'),
-          ],
+        body: const Center(
+          child: OrderItemDisplay(5, 'Footlong'),
         ),
       ),
     );
@@ -27,22 +22,13 @@ class App extends StatelessWidget {
 }
 
 class OrderItemDisplay extends StatelessWidget {
-  final String itemType;
   final int quantity;
+  final String itemType;
 
   const OrderItemDisplay(this.quantity, this.itemType, {super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: Colors.blue,
-      width: 250,
-      height: 100.0,
-      alignment: Alignment.center,
-      child: Text(
-        '$quantity $itemType sandwich(es): ${'🥪' * quantity}',
-        textAlign: TextAlign.center,
-      ),
-    );
+    return Text('$quantity $itemType sandwich(es): ${'🥪' * quantity}');
   }
 }
