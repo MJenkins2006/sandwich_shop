@@ -66,7 +66,7 @@ class _OrderScreenState extends State<OrderScreen> {
                   ElevatedButton(
                     onPressed: _increaseQuantity,
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.green,
+                      backgroundColor: _quantity < widget.maxQuantity ? Colors.green : Colors.grey,
                       foregroundColor: Colors.white,
                       fixedSize: const Size(100, 36),
                     ),
@@ -76,7 +76,7 @@ class _OrderScreenState extends State<OrderScreen> {
                   ElevatedButton(
                     onPressed: _decreaseQuantity,
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.red,
+                      backgroundColor: _quantity == 0 ? Colors.grey : Colors.red,
                       foregroundColor: Colors.white,
                       fixedSize: const Size(100, 36),
                     ),
