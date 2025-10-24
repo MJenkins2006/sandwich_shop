@@ -28,17 +28,30 @@ class OrderScreen extends StatefulWidget {
 }
 
 class _OrderScreenState extends State<OrderScreen> {
-  int _quantity = 0;
+  int _quantityFootlong = 0;
+  int _quantitySixinch = 0;
 
-  void _increaseQuantity() {
-    if (_quantity < widget.maxQuantity) {
-      setState(() => _quantity++);
+  void _increaseQuantityFootlong() {
+    if (_quantityFootlong < widget.maxQuantity) {
+      setState(() => _quantityFootlong++);
     }
   }
 
-  void _decreaseQuantity() {
-    if (_quantity > 0) {
-      setState(() => _quantity--);
+  void _decreaseQuantityFootlong() {
+    if (_quantityFootlong > 0) {
+      setState(() => _quantityFootlong--);
+    }
+  }
+
+  void _increaseQuantitySixinch() {
+    if (_quantitySixinch < widget.maxQuantity) {
+      setState(() => _quantitySixinch++);
+    }
+  }
+
+  void _decreaseQuantitySixinch() {
+    if (_quantitySixinch > 0) {
+      setState(() => _quantitySixinch--);
     }
   }
 
@@ -54,38 +67,91 @@ class _OrderScreenState extends State<OrderScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            OrderItemDisplay(
-              _quantity,
-              'Footlong',
-            ),
-            SizedBox(
-              height: 100,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  ElevatedButton(
-                    onPressed: _increaseQuantity,
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: _quantity < widget.maxQuantity ? Colors.green : Colors.grey,
-                      foregroundColor: Colors.white,
-                      fixedSize: const Size(100, 36),
-                    ),
-                    child: const Text('Add'),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Expanded(
+                  child: Column(
+                    children: [
+                      OrderItemDisplay(
+                        _quantityFootlong,
+                        'Footlong',
+                      ),
+                      SizedBox(
+                        height: 100,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            ElevatedButton(
+                              onPressed: _increaseQuantityFootlong,
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: _quantityFootlong < widget.maxQuantity
+                                    ? Colors.green
+                                    : Colors.grey,
+                                foregroundColor: Colors.white,
+                                fixedSize: const Size(100, 36),
+                              ),
+                              child: const Text('Add'),
+                            ),
+                            const SizedBox(width: 16),
+                            ElevatedButton(
+                              onPressed: _decreaseQuantityFootlong,
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor:
+                                    _quantityFootlong == 0 ? Colors.grey : Colors.red,
+                                foregroundColor: Colors.white,
+                                fixedSize: const Size(100, 36),
+                              ),
+                              child: const Text('Remove'),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
                   ),
-                  const SizedBox(width: 16),
-                  ElevatedButton(
-                    onPressed: _decreaseQuantity,
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: _quantity == 0 ? Colors.grey : Colors.red,
-                      foregroundColor: Colors.white,
-                      fixedSize: const Size(100, 36),
-                    ),
-                    child: const Text('Remove'),
+                ),
+                Expanded(
+                  child: Column(
+                    children: [
+                      OrderItemDisplay(
+                        _quantitySixinch,
+                        'Six-inch',
+                      ),
+                      SizedBox(
+                        height: 100,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            ElevatedButton(
+                              onPressed: _increaseQuantitySixinch,
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: _quantitySixinch < widget.maxQuantity
+                                    ? Colors.green
+                                    : Colors.grey,
+                                foregroundColor: Colors.white,
+                                fixedSize: const Size(100, 36),
+                              ),
+                              child: const Text('Add'),
+                            ),
+                            const SizedBox(width: 16),
+                            ElevatedButton(
+                              onPressed: _decreaseQuantitySixinch,
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor:
+                                    _quantitySixinch == 0 ? Colors.grey : Colors.red,
+                                foregroundColor: Colors.white,
+                                fixedSize: const Size(100, 36),
+                              ),
+                              child: const Text('Remove'),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
-            const SizedBox(height: 24),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 32.0),
               child: TextField(
@@ -117,13 +183,13 @@ class _OrderScreenState extends State<OrderScreen> {
 }
 
 class OrderItemDisplay extends StatelessWidget {
-  final int quantity;
+  final int quantityFootlong;
   final String itemType;
 
-  const OrderItemDisplay(this.quantity, this.itemType, {super.key});
+  const OrderItemDisplay(this.quantityFootlong, this.itemType, {super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Text('$quantity $itemType sandwich(es): ${'🥪' * quantity}');
+    return Text('$quantityFootlong $itemType sandwich(es): ${'🥪' * quantityFootlong}');
   }
 }
