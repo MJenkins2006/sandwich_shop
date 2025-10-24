@@ -9,7 +9,7 @@ class App extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
       title: 'Sandwich Shop App',
       home: OrderScreen(maxQuantity: 5),
     );
@@ -30,6 +30,15 @@ class OrderScreen extends StatefulWidget {
 class _OrderScreenState extends State<OrderScreen> {
   int _quantityFootlong = 0;
   int _quantitySixinch = 0;
+
+  // 0 = Footlong, 1 = Six-inch
+  int _selectedIndex = 0;
+
+  void _selectIndex(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+  }
 
   void _increaseQuantityFootlong() {
     if (_quantityFootlong < widget.maxQuantity) {
@@ -59,6 +68,7 @@ class _OrderScreenState extends State<OrderScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final isFootlongSelected = _selectedIndex == 0;
     return Scaffold(
       appBar: AppBar(
         title: const Text('Sandwich Counter'),
@@ -67,91 +77,120 @@ class _OrderScreenState extends State<OrderScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Expanded(
-                  child: Column(
-                    children: [
-                      OrderItemDisplay(
-                        _quantityFootlong,
-                        'Footlong',
-                      ),
-                      SizedBox(
-                        height: 100,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            ElevatedButton(
-                              onPressed: _increaseQuantityFootlong,
-                              style: ElevatedButton.styleFrom(
-                                backgroundColor: _quantityFootlong < widget.maxQuantity
-                                    ? Colors.green
-                                    : Colors.grey,
-                                foregroundColor: Colors.white,
-                                fixedSize: const Size(100, 36),
-                              ),
-                              child: const Text('Add'),
-                            ),
-                            const SizedBox(width: 16),
-                            ElevatedButton(
-                              onPressed: _decreaseQuantityFootlong,
-                              style: ElevatedButton.styleFrom(
-                                backgroundColor:
-                                    _quantityFootlong == 0 ? Colors.grey : Colors.red,
-                                foregroundColor: Colors.white,
-                                fixedSize: const Size(100, 36),
-                              ),
-                              child: const Text('Remove'),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
+            // Segmented control
+            ToggleButtons(
+              isSelected: [_selectedIndex == 0, _selectedIndex == 1],
+              onPressed: (index) {
+                // ensure only one selected
+                _selectIndex(index);
+              },
+              borderRadius: BorderRadius.circular(8),
+              selectedBorderColor: Theme.of(context).colorScheme.primary,
+              children: const [
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 16.0),
+                  child: Text('Footlong'),
                 ),
-                Expanded(
-                  child: Column(
-                    children: [
-                      OrderItemDisplay(
-                        _quantitySixinch,
-                        'Six-inch',
-                      ),
-                      SizedBox(
-                        height: 100,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            ElevatedButton(
-                              onPressed: _increaseQuantitySixinch,
-                              style: ElevatedButton.styleFrom(
-                                backgroundColor: _quantitySixinch < widget.maxQuantity
-                                    ? Colors.green
-                                    : Colors.grey,
-                                foregroundColor: Colors.white,
-                                fixedSize: const Size(100, 36),
-                              ),
-                              child: const Text('Add'),
-                            ),
-                            const SizedBox(width: 16),
-                            ElevatedButton(
-                              onPressed: _decreaseQuantitySixinch,
-                              style: ElevatedButton.styleFrom(
-                                backgroundColor:
-                                    _quantitySixinch == 0 ? Colors.grey : Colors.red,
-                                foregroundColor: Colors.white,
-                                fixedSize: const Size(100, 36),
-                              ),
-                              child: const Text('Remove'),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 16.0),
+                  child: Text('Six-inch'),
                 ),
               ],
             ),
+            const SizedBox(height: 16),
+            // Only show the selected item
+            SizedBox(
+              width: 700,
+              child: isFootlongSelected
+                  ? Column(
+                      children: [
+                        OrderItemDisplay(
+                          _quantityFootlong,
+                          'Footlong',
+                        ),
+                        SizedBox(
+                          height: 100,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              ElevatedButton(
+                                onPressed:
+                                    _quantityFootlong < widget.maxQuantity
+                                        ? _increaseQuantityFootlong
+                                        : null,
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor: Colors.green,
+                                  foregroundColor: Colors.white,
+                                  fixedSize: const Size(100, 36),
+                                  textStyle: const TextStyle(
+                                      fontWeight: FontWeight.bold),
+                                ),
+                                child: const Text('Add'),
+                              ),
+                              const SizedBox(width: 16),
+                              ElevatedButton(
+                                onPressed: _quantityFootlong > 0
+                                    ? _decreaseQuantityFootlong
+                                    : null,
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor: Colors.red,
+                                  foregroundColor: Colors.white,
+                                  fixedSize: const Size(100, 36),
+                                  textStyle: const TextStyle(
+                                      fontWeight: FontWeight.bold),
+                                ),
+                                child: const Text('Remove'),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    )
+                  : Column(
+                      children: [
+                        OrderItemDisplay(
+                          _quantitySixinch,
+                          'Six-inch',
+                        ),
+                        SizedBox(
+                          height: 100,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              ElevatedButton(
+                                onPressed: _quantitySixinch < widget.maxQuantity
+                                    ? _increaseQuantitySixinch
+                                    : null,
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor: Colors.green,
+                                  foregroundColor: Colors.white,
+                                  fixedSize: const Size(100, 36),
+                                  textStyle: const TextStyle(
+                                      fontWeight: FontWeight.bold),
+                                ),
+                                child: const Text('Add'),
+                              ),
+                              const SizedBox(width: 16),
+                              ElevatedButton(
+                                onPressed: _quantitySixinch > 0
+                                    ? _decreaseQuantitySixinch
+                                    : null,
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor: Colors.red,
+                                  foregroundColor: Colors.white,
+                                  fixedSize: const Size(100, 36),
+                                  textStyle: const TextStyle(
+                                      fontWeight: FontWeight.bold),
+                                ),
+                                child: const Text('Remove'),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+            ),
+            const SizedBox(height: 16),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 32.0),
               child: TextField(
@@ -190,6 +229,7 @@ class OrderItemDisplay extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Text('$quantityFootlong $itemType sandwich(es): ${'🥪' * quantityFootlong}');
+    return Text(
+        '$quantityFootlong $itemType sandwich(es): ${'🥪' * quantityFootlong}');
   }
 }
