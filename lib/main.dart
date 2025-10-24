@@ -110,7 +110,7 @@ class _OrderScreenState extends State<OrderScreen> {
                   const SizedBox(height: 16),
                   // Only show the selected item
                   SizedBox(
-                    width: 700,
+                    width: 300,
                     child: isFootlongSelected
                         ? Column(
                             children: [
