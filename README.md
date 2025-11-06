@@ -40,6 +40,10 @@ cd sandwich_shop
    - Use the dropdown menu to choose bread type
    - Enter special instructions in the notes field
 4. **Remove sandwiches** - Click the red "Remove" button to decrease quantity
+<<<<<<< HEAD
+=======
+5. **View order summary** - Order details update in real-time
+>>>>>>> fcc7553a00045fb29afb63e83c9b560408576d68
 
 ### Feature Details
 
