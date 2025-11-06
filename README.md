@@ -17,7 +17,7 @@ A Flutter-based app for ordering sandwhiches
 ### Prerequisites
 
 - **Operating System**: Windows, macOS, or Linux
-- **Flutter SDK**: Version 3.0.0 or higher ([Install Flutter](https://docs.flutter.dev/get-started/install))
+- **Flutter SDK**: Version 3.0.0 or higher
 - **Dart SDK**: Included with Flutter
 - **IDE**: VS Code (recommended) or Android Studio
 - **Git**: For cloning the repository
@@ -43,7 +43,6 @@ cd sandwich_shop
 <<<<<<< HEAD
 =======
 5. **View order summary** - Order details update in real-time
->>>>>>> fcc7553a00045fb29afb63e83c9b560408576d68
 
 ### Feature Details
 
@@ -86,24 +85,6 @@ sandwich_shop/
 ├── README.md                        # This file
 └── screenshots/                      
 ```
-
-### Key Files
-
-- **`main.dart`**: Contains all UI widgets and state management
-  - `App`: Root MaterialApp widget
-  - `OrderScreen`: Main stateful widget
-  - `StyledButton`: Reusable button component
-  - `OrderItemDisplay`: Order summary display widget
-  
-- **`order_repository.dart`**: Business logic for order quantity
-  - Handles increment/decrement operations
-  - Enforces min/max constraints
-  - Provides state validation methods
-
-- **`app_styles.dart`**: Centralized styling
-  - `heading1`: AppBar title style
-  - `normalText`: Body text style
-
 ## Technologies Used
 
 ### Framework & Language
@@ -125,4 +106,4 @@ sandwich_shop/
 - Separation of concerns (UI, business logic, styling)
 
 **Matthew** - Developer
-- 🐙 GitHub: [@MJenkins2006](https://github.com/MJenkins2006)
+- GitHub: [@MJenkins2006](https://github.com/MJenkins2006)
