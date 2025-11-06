@@ -24,6 +24,7 @@ class _OrderScreenState extends State<OrderScreen> {
   late final OrderRepository _orderRepository;
   final TextEditingController _notesController = TextEditingController();
   bool _isFootlong = true;
+  bool _isToasted = false;
   BreadType _selectedBreadType = BreadType.white;
 
   @override
@@ -105,6 +106,7 @@ class _OrderScreenState extends State<OrderScreen> {
             OrderItemDisplay(
               quantity: _orderRepository.quantity,
               itemType: sandwichType,
+              toastedType: _isToasted ? 'toasted' : 'untoasted',
               breadType: _selectedBreadType,
               orderNote: noteForDisplay,
             ),
@@ -118,6 +120,19 @@ class _OrderScreenState extends State<OrderScreen> {
                   onChanged: _onSandwichTypeChanged,
                 ),
                 const Text('footlong', style: normalText),
+              ],
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const Text('untoasted', style: normalText),
+                Switch(
+                  value: _isToasted,
+                  onChanged: (value) {
+                    setState(() => _isToasted = value);
+                  },
+                ),
+                const Text('toasted', style: normalText),
               ],
             ),
             const SizedBox(height: 10),
@@ -214,6 +229,7 @@ class StyledButton extends StatelessWidget {
 class OrderItemDisplay extends StatelessWidget {
   final int quantity;
   final String itemType;
+  final String toastedType;
   final BreadType breadType;
   final String orderNote;
 
@@ -221,6 +237,7 @@ class OrderItemDisplay extends StatelessWidget {
     super.key,
     required this.quantity,
     required this.itemType,
+    required this.toastedType,
     required this.breadType,
     required this.orderNote,
   });
@@ -228,7 +245,7 @@ class OrderItemDisplay extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     String displayText =
-        '$quantity ${breadType.name} $itemType sandwich(es): ${'🥪' * quantity}';
+        '$quantity $toastedType ${breadType.name} $itemType sandwich(es): ${'🥪' * quantity}';
 
     return Column(
       children: [
