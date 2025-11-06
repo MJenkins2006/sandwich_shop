@@ -1,4 +1,4 @@
-# Sandwich Shop App 🥪
+# Sandwich Shop App
 
 A Flutter-based app for ordering sandwhiches
 
@@ -75,7 +75,7 @@ cd sandwich_shop
    - Use the dropdown menu to choose bread type
    - Enter special instructions in the notes field
 4. **Remove sandwiches** - Click the red "Remove" button to decrease quantity
-5. **View order summary** - Order details update in real-time at the top
+5. **View order summary** - Order details update in real-time
 
 ### Feature Details
 
@@ -123,22 +123,6 @@ flutter test --coverage
 flutter test test/widget_test.dart
 ```
 
-## Screenshots
-
-### Main Order Screen
-![Main Screen](screenshots/main_screen.png)
-*Order interface with quantity controls, size toggle, bread selection, and notes field*
-
-### Order Summary
-![Order Summary](screenshots/order_summary.png)
-*Real-time order display showing quantity, size, bread type, and notes*
-
-### Maximum Limit Reached
-![Max Limit](screenshots/max_limit.png)
-*Add button disabled when maximum quantity is reached*
-
-> **Note**: Add actual screenshots to a `screenshots/` folder in your project
-
 ## Project Structure
 
 ```
@@ -153,7 +137,7 @@ sandwich_shop/
 │   └── widget_test.dart             # Unit and widget tests
 ├── pubspec.yaml                     # Project dependencies
 ├── README.md                        # This file
-└── screenshots/                     # App screenshots (create this folder)
+└── screenshots/                      
 ```
 
 ### Key Files
@@ -193,44 +177,5 @@ sandwich_shop/
 - StatefulWidget for reactive UI
 - Separation of concerns (UI, business logic, styling)
 
-## Known Issues and Limitations
-
-### Current Limitations
-- ❌ Orders are not persisted (lost on app restart)
-- ❌ No backend integration or database
-- ❌ Single order at a time (no cart functionality)
-- ❌ No checkout or payment processing
-- ❌ Limited to predefined bread types and sizes
-
-### Planned Improvements
-- [ ] Add local storage (SharedPreferences or SQLite)
-- [ ] Implement shopping cart with multiple orders
-- [ ] Add more customization options (toppings, sauces)
-- [ ] Integrate with backend API
-- [ ] Add order history functionality
-- [ ] Implement user authentication
-- [ ] Add price calculation and payment integration
-- [ ] Support for internationalization (i18n)
-
-### Known Bugs
-- None currently reported
-
-### Contributing
-Contributions are welcome! Please:
-1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
-
-## License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-## Contact Information
-
 **Matthew** - Developer
-- 📧 Email: your.email@example.com
-- 💼 LinkedIn: [Your LinkedIn](https://linkedin.com/in/yourprofile)
-- 🐙 GitHub: [@yourusername](https://github.com/yourusername)
-- 🌐 Portfolio: [yourportfolio.com](https://yourportfolio.com)
+- 🐙 GitHub: [@MJenkins2006](https://github.com/MJenkins2006)
