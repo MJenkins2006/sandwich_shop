@@ -37,7 +37,7 @@ cd sandwich_shop
 
 1. **Launch the app** - The main screen displays the current order with quantity set to 0
 2. **Add sandwiches** - Click the green "Add" button to increase quantity
-3. **Customize your order**:
+3. **Customize the order**:
    - Toggle the switch to select six-inch or footlong size
    - Toggle the switch to select toasted or untoasted
    - Use the dropdown menu to choose bread type
