@@ -5,7 +5,8 @@ A Flutter-based app for ordering sandwhiches
 ## Features
 
 - **Quantity Management**: Add or remove sandwiches
-- **Sandwich Customization**: Choose between six-inch and footlong sizes, toasted or untoasted
+- **Sandwich Customization**: Choose between six-inch and footlong sizes
+- **Cooking Customization**: Choose between toasted or untoasted
 - **Bread Selection**: Select from white, wheat, or wholemeal
 - **Order Notes**: Add special instructions (e.g., "no onions", "extra cheese")
 - **Visual Feedback**: Emoji-based display showing sandwich count
@@ -51,7 +52,7 @@ cd sandwich_shop
   - Left position: Six-inch
   - Right position: Footlong (default)
 
-#### Bread Cooked Selection
+#### Cooking Selection
 - Use the **Switch** to toggle between:
   - Left position: untoasted (default)
   - Right position: toasted
@@ -87,8 +88,7 @@ sandwich_shop/
 ├── test/
 │   └── widget_test.dart             # Unit and widget tests
 ├── pubspec.yaml                     # Project dependencies
-├── README.md                        # This file
-└── screenshots/                      
+└── README.md                        # This file
 ```
 ## Technologies Used
 
