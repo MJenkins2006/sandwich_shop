@@ -21,7 +21,10 @@ class OrderRepository {
     }
   }
 
-  int getPrice(String itemType) {
+}
+
+class PricingRepository {
+  int getPrice(String itemType, int quantity) {
     int price;
     if (itemType == 'six-inch') {
       price = 7 * quantity;
