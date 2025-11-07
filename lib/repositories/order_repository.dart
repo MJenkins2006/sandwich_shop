@@ -20,4 +20,14 @@ class OrderRepository {
       _quantity--;
     }
   }
+
+  int getPrice(String itemType) {
+    int price;
+    if (itemType == 'six-inch') {
+      price = 7 * quantity;
+    } else {
+      price = 11 * quantity;
+    }
+    return price;
+  }
 }

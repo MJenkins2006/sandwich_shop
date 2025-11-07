@@ -109,6 +109,7 @@ class _OrderScreenState extends State<OrderScreen> {
               toastedType: _isToasted ? 'toasted' : 'untoasted',
               breadType: _selectedBreadType,
               orderNote: noteForDisplay,
+              price: _orderRepository.getPrice(sandwichType),
             ),
             const SizedBox(height: 20),
             Row(
@@ -234,6 +235,7 @@ class OrderItemDisplay extends StatelessWidget {
   final String toastedType;
   final BreadType breadType;
   final String orderNote;
+  final int price;
 
   const OrderItemDisplay({
     super.key,
@@ -242,19 +244,20 @@ class OrderItemDisplay extends StatelessWidget {
     required this.toastedType,
     required this.breadType,
     required this.orderNote,
+    required this.price,
   });
 
   @override
   Widget build(BuildContext context) {
     String displayText =
         '$quantity $toastedType ${breadType.name} $itemType sandwich(es): ${'🥪' * quantity}';
-
     return Column(
       children: [
         Text(
           displayText,
           style: normalText,
         ),
+        Text("£$price"),
         const SizedBox(height: 8),
         Text(
           'Note: $orderNote',
