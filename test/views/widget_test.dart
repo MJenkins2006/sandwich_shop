@@ -213,5 +213,21 @@ void main() {
           find.text('1 toasted wholemeal footlong sandwich(es): 🥪'), findsOneWidget);
       expect(find.text('Note: Lots of lettuce'), findsOneWidget);
     });
+    testWidgets('check correct price adding and switching', (WidgetTester tester) async {
+      await tester.pumpWidget(const App());
+      // Verify initial is 0
+      expect(find.textContaining('£0'), findsOneWidget);
+
+      // add two footlongs
+      await tester.tap(find.widgetWithText(ElevatedButton, 'Add'));
+      await tester.tap(find.widgetWithText(ElevatedButton, 'Add'));
+      await tester.pump();
+      expect(find.textContaining('£22'), findsOneWidget);
+
+      // Toggle to six-inch
+      await tester.tap(find.byKey(const Key('footlong_switch')));
+      await tester.pumpAndSettle();
+      expect(find.textContaining('£14'), findsOneWidget);
+    });
   });
 }

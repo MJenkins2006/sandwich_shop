@@ -22,6 +22,7 @@ class App extends StatelessWidget {
 
 class _OrderScreenState extends State<OrderScreen> {
   late final OrderRepository _orderRepository;
+  late final PricingRepository _pricingRepository;
   final TextEditingController _notesController = TextEditingController();
   bool _isFootlong = true;
   bool _isToasted = false;
@@ -31,6 +32,7 @@ class _OrderScreenState extends State<OrderScreen> {
   void initState() {
     super.initState();
     _orderRepository = OrderRepository(maxQuantity: widget.maxQuantity);
+    _pricingRepository = PricingRepository();
     _notesController.addListener(() {
       setState(() {});
     });
@@ -109,7 +111,7 @@ class _OrderScreenState extends State<OrderScreen> {
               toastedType: _isToasted ? 'toasted' : 'untoasted',
               breadType: _selectedBreadType,
               orderNote: noteForDisplay,
-              price: _orderRepository.getPrice(sandwichType),
+              price: _pricingRepository.getPrice(sandwichType, _orderRepository.quantity),
             ),
             const SizedBox(height: 20),
             Row(
