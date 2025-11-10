@@ -38,6 +38,7 @@ class _OrderScreenState extends State<OrderScreen> {
   bool _isFootlong = true;
   BreadType _selectedBreadType = BreadType.white;
   int _quantity = 1;
+  String orderDisplay = 'Cart empty';
 
   @override
   void initState() {
@@ -82,6 +83,10 @@ class _OrderScreenState extends State<OrderScreen> {
           behavior: SnackBarBehavior.floating,
         ),
       );
+
+      setState(() {
+        orderDisplay = 'You have ${_cart.countOfItems} item(s) in your cart for a total of £${_cart.totalPrice.toStringAsFixed(2)}';
+      });
     }
   }
 
@@ -174,6 +179,10 @@ class _OrderScreenState extends State<OrderScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        leading: SizedBox(
+          height: 100,
+          child: Image.asset('assets/images/logo.png'),
+        ),
         title: const Text(
           'Sandwich Counter',
           style: heading1,
@@ -252,6 +261,11 @@ class _OrderScreenState extends State<OrderScreen> {
                 backgroundColor: Colors.green,
               ),
               const SizedBox(height: 20),
+              Text(
+                orderDisplay,
+                style: heading2,
+                textAlign: TextAlign.center,
+              )
             ],
           ),
         ),
