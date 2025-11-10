@@ -155,9 +155,11 @@ class _OrderScreenState extends State<OrderScreen> {
   }
 
   void _increaseQuantity() {
+    if (_quantity < widget.maxQuantity) {
     setState(() {
       _quantity++;
     });
+    }
   }
 
   void _decreaseQuantity() {
