@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sandwich_shop/views/app_styles.dart';
 import 'package:sandwich_shop/repositories/order_repository.dart';
+import 'package:sandwich_shop/repositories/pricing_repository.dart';
 
 enum BreadType { white, wheat, wholemeal }
 
@@ -20,13 +21,23 @@ class App extends StatelessWidget {
   }
 }
 
+class OrderScreen extends StatefulWidget {
+  final int maxQuantity;
+
+  const OrderScreen({super.key, this.maxQuantity = 10});
+
+  @override
+  State<OrderScreen> createState() {
+    return _OrderScreenState();
+  }
+}
+
 class _OrderScreenState extends State<OrderScreen> {
   late final OrderRepository _orderRepository;
-  late final PricingRepository _pricingRepository;
   final TextEditingController _notesController = TextEditingController();
   bool _isFootlong = true;
-  bool _isToasted = false;
   BreadType _selectedBreadType = BreadType.white;
+  late final PricingRepository _pricingRepository;
 
   @override
   void initState() {
@@ -82,6 +93,11 @@ class _OrderScreenState extends State<OrderScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final double totalPrice = _pricingRepository.calculatePrice(
+      quantity: _orderRepository.quantity,
+      isFootlong: _isFootlong,
+    );
+
     String sandwichType = 'footlong';
     if (!_isFootlong) {
       sandwichType = 'six-inch';
@@ -108,10 +124,13 @@ class _OrderScreenState extends State<OrderScreen> {
             OrderItemDisplay(
               quantity: _orderRepository.quantity,
               itemType: sandwichType,
-              toastedType: _isToasted ? 'toasted' : 'untoasted',
               breadType: _selectedBreadType,
               orderNote: noteForDisplay,
-              price: _pricingRepository.getPrice(sandwichType, _orderRepository.quantity),
+            ),
+            const SizedBox(height: 20),
+            Text(
+              'Total Price: £${totalPrice.toStringAsFixed(2)}',
+              style: heading2,
             ),
             const SizedBox(height: 20),
             Row(
@@ -119,25 +138,10 @@ class _OrderScreenState extends State<OrderScreen> {
               children: [
                 const Text('six-inch', style: normalText),
                 Switch(
-                  key: const Key('footlong_switch'),
                   value: _isFootlong,
                   onChanged: _onSandwichTypeChanged,
                 ),
                 const Text('footlong', style: normalText),
-              ],
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const Text('untoasted', style: normalText),
-                Switch(
-                  key: const Key('toasted_switch'),
-                  value: _isToasted,
-                  onChanged: (value) {
-                    setState(() => _isToasted = value);
-                  },
-                ),
-                const Text('toasted', style: normalText),
               ],
             ),
             const SizedBox(height: 10),
@@ -184,17 +188,6 @@ class _OrderScreenState extends State<OrderScreen> {
   }
 }
 
-class OrderScreen extends StatefulWidget {
-  final int maxQuantity;
-
-  const OrderScreen({super.key, this.maxQuantity = 10});
-
-  @override
-  State<OrderScreen> createState() {
-    return _OrderScreenState();
-  }
-}
-
 class StyledButton extends StatelessWidget {
   final VoidCallback? onPressed;
   final IconData icon;
@@ -234,32 +227,28 @@ class StyledButton extends StatelessWidget {
 class OrderItemDisplay extends StatelessWidget {
   final int quantity;
   final String itemType;
-  final String toastedType;
   final BreadType breadType;
   final String orderNote;
-  final int price;
 
   const OrderItemDisplay({
     super.key,
     required this.quantity,
     required this.itemType,
-    required this.toastedType,
     required this.breadType,
     required this.orderNote,
-    required this.price,
   });
 
   @override
   Widget build(BuildContext context) {
     String displayText =
-        '$quantity $toastedType ${breadType.name} $itemType sandwich(es): ${'🥪' * quantity}';
+        '$quantity ${breadType.name} $itemType sandwich(es): ${'🥪' * quantity}';
+
     return Column(
       children: [
         Text(
           displayText,
           style: normalText,
         ),
-        Text("£$price"),
         const SizedBox(height: 8),
         Text(
           'Note: $orderNote',

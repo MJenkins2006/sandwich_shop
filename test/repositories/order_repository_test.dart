@@ -1,4 +1,3 @@
-
 import 'package:flutter_test/flutter_test.dart';
 import 'package:sandwich_shop/repositories/order_repository.dart';
 
@@ -35,19 +34,5 @@ void main() {
       repository.decrement(); // should not change
       expect(repository.quantity, 0);
     });
-  });
-  group(PricingRepository, () {
-    test('getPrice returns correct price for six-inch sandwiches', () {
-      final pricingRepository = PricingRepository();
-      expect(pricingRepository.getPrice('six-inch', 1), 7);
-      expect(pricingRepository.getPrice('six-inch', 3), 21);
-    });
-
-    test('getPrice returns correct price for footlong sandwiches', () {
-      final pricingRepository = PricingRepository();
-      expect(pricingRepository.getPrice('footlong', 1), 11);
-      expect(pricingRepository.getPrice('footlong', 4), 44);
-    });
-
   });
 }
