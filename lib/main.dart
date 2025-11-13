@@ -85,7 +85,8 @@ class _OrderScreenState extends State<OrderScreen> {
       );
 
       setState(() {
-        orderDisplay = 'You have ${_cart.countOfItems} item(s) in your cart for a total of £${_cart.totalPrice.toStringAsFixed(2)}';
+        orderDisplay =
+            'You have ${_cart.countOfItems} item(s) in your cart for a total of £${_cart.totalPrice.toStringAsFixed(2)}';
       });
     }
   }
@@ -156,9 +157,9 @@ class _OrderScreenState extends State<OrderScreen> {
 
   void _increaseQuantity() {
     if (_quantity < widget.maxQuantity) {
-    setState(() {
-      _quantity++;
-    });
+      setState(() {
+        _quantity++;
+      });
     }
   }
 
@@ -181,9 +182,11 @@ class _OrderScreenState extends State<OrderScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: SizedBox(
-          height: 100,
-          child: Image.asset('assets/images/logo.png'),
+        toolbarHeight: 100,
+        leadingWidth: 120,
+        leading: Image.asset(
+          'assets/images/logo.png',
+          fit: BoxFit.contain,
         ),
         title: const Text(
           'Sandwich Counter',
@@ -195,19 +198,41 @@ class _OrderScreenState extends State<OrderScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              SizedBox(
-                height: 100,
-                child: Image.asset(
-                  _getCurrentImagePath(),
-                  errorBuilder: (context, error, stackTrace) {
-                    return const Center(
-                      child: Text(
-                        'Image not found',
-                        style: normalText,
-                      ),
-                    );
-                  },
-                ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Wrap(
+                    alignment: WrapAlignment.center,
+                    spacing: 8,
+                    runSpacing: 8,
+                    children: [
+                      if (_quantity == 0)
+                        const Text('No sandwiches selected', style: normalText)
+                      else
+                        for (int i = 0;
+                            i <
+                                (_quantity > widget.maxQuantity
+                                    ? widget.maxQuantity
+                                    : _quantity);
+                            i++)
+                          SizedBox(
+                            width: 240,
+                            height: 90,
+                            child: Image.asset(
+                              _getCurrentImagePath(),
+                              errorBuilder: (context, error, stackTrace) {
+                                return const Center(
+                                  child: Text(
+                                    'Image not found',
+                                    style: normalText,
+                                  ),
+                                );
+                              },
+                            ),
+                          ),
+                    ],
+                  ),
+                ],
               ),
               const SizedBox(height: 20),
               DropdownMenu<SandwichType>(
