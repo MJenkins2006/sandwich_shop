@@ -194,4 +194,36 @@ void main() {
       expect(find.text('Note: Lots of lettuce'), findsOneWidget);
     });
   });
+  group('Cart Functionality', () {
+    testWidgets('calculates total price correctly',
+        (WidgetTester tester) async {
+      await tester.pumpWidget(const App());
+      
+      // Add 1 footlong sandwich
+      await tester.tap(find.widgetWithText(ElevatedButton, 'Add to Cart'));
+      await tester.pumpAndSettle();
+      expect(find.textContaining('£11'), findsOneWidget);
+
+      await tester.tap(find.byType(Switch));
+      await tester.pumpAndSettle();
+      await tester.tap(find.widgetWithText(ElevatedButton, 'Add to Cart'));
+      await tester.pumpAndSettle();
+      expect(find.textContaining('£18'), findsOneWidget);
+    });
+
+    testWidgets('Correct counter in cart updates', (WidgetTester tester) async {
+      await tester.pumpWidget(const App());
+      
+      // Initially cart is empty
+      expect(find.text('Cart empty'), findsOneWidget);
+      
+      // Add 2 sandwiches
+      await tester.tap(find.byIcon(Icons.add));
+      await tester.pump();
+      await tester.tap(find.widgetWithText(ElevatedButton, 'Add to Cart'));
+      await tester.pumpAndSettle();
+      
+      expect(find.textContaining('You have 2 item(s) in your cart'), findsOneWidget);
+    });
+  });
 }
