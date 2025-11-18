@@ -1,114 +1,76 @@
-# Sandwich Shop App
+# Sandwich Shop
 
-A Flutter-based app for ordering sandwhiches
+This is a simple Flutter app that allows users to order sandwiches.
+The app is built using Flutter and Dart, and it is designed primarily to be run in a web
+browser.
 
-## Features
+## Install the essential tools
 
-- **Quantity Management**: Add or remove sandwiches
-- **Sandwich Customization**: Choose between six-inch and footlong sizes
-- **Cooking Customization**: Choose between toasted or untoasted
-- **Bread Selection**: Select from white, wheat, or wholemeal
-- **Order Notes**: Add special instructions (e.g., "no onions", "extra cheese")
-- **Visual Feedback**: Emoji-based display showing sandwich count
-- **Smart Constraints**: Buttons automatically disable at min/max limits
-- **Configurable Limits**: Set maximum order quantity per session
-- **Real-time pricing**: See price changes in real-time depending on type and quantity
+1. **Terminal**:
 
-## Installation and Setup
+    - **macOS** – use the built-in Terminal app by pressing **⌘ + Space**, typing **Terminal**, and pressing **Return**.
+    - **Windows** – open the start menu using the **Windows** key. Then enter **cmd** to open the **Command Prompt**. Alternatively, you can use **Windows PowerShell** or **Windows Terminal**.
 
-### Prerequisites
+2. **Git** – verify that you have `git` installed by entering `git --version`, in the terminal.
+    If this is missing, download the installer from [Git's official site](https://git-scm.com/downloads?utm_source=chatgpt.com).
 
-- **Operating System**: Windows, macOS, or Linux
-- **Flutter SDK**: Version 3.0.0 or higher
-- **Dart SDK**: Included with Flutter
-- **IDE**: VS Code (recommended) or Android Studio
-- **Git**: For cloning the repository
+3. **Package managers**:
 
-### Clone the Repository
+    - **Homebrew** (macOS) – verify that you have `brew` installed with `brew --version`; if missing, follow the instructions on the [Homebrew installation page](https://brew.sh/).
+    - **Chocolatey** (Windows) – verify that you have `choco` installed with `choco --version`; if missing, follow the instructions on the [Chocolatey installation page](https://chocolatey.org/install).
+
+4. **Flutter SDK** – verify that you have `flutter` installed and it is working with `flutter doctor`; if missing, install it using your package manager:
+
+    - **macOS**: `brew install --cask flutter`
+    - **Windows**: `choco install flutter`
+
+5. **Visual Studio Code** – verify that you have `code` installed with `code --version`; if missing, use your package manager to install it:
+
+    - **macOS**: `brew install --cask visual-studio-code`
+    - **Windows**: `choco install vscode`
+
+## Get the code
+
+### If this is your first time working on this project
+
+Enter the following commands in your terminal to clone the repository and
+open it in Visual Studio Code.
+You may want to change directory (`cd`) to the directory where you want to clone the
+repository first.
 
 ```bash
-git clone https://github.com/MJenkins2006/sandwich_shop.git
+git clone --branch 6 https://github.com/manighahrmani/sandwich_shop
 cd sandwich_shop
+code .
 ```
 
-## Usage Instructions
+### If you have already cloned the repository
 
-### Basic Workflow
-
-1. **Launch the app** - The main screen displays the current order with quantity set to 0
-2. **Add sandwiches** - Click the green "Add" button to increase quantity
-3. **Customize the order**:
-   - Toggle the switch to select six-inch or footlong size
-   - Toggle the switch to select toasted or untoasted
-   - Use the dropdown menu to choose bread type
-   - Enter special instructions in the notes field
-4. **Remove sandwiches** - Click the red "Remove" button to decrease quantity
-5. **View order summary** - Order details update in real-time
-
-### Feature Details
-
-#### Size Selection
-- Use the **Switch** to toggle between:
-  - Left position: Six-inch
-  - Right position: Footlong (default)
-
-#### Cooking Selection
-- Use the **Switch** to toggle between:
-  - Left position: untoasted (default)
-  - Right position: toasted
-
-#### Bread Type Selection
-- Click the **Dropdown Menu** to choose from:
-  - White (default)
-  - Wheat
-  - Wholemeal
-
-#### Order Notes
-- Click the **text field** labeled "Add a note"
-- Type special instructions (e.g., "no onions", "extra cheese")
-- Notes display in real-time in the order summary
-- Shows "No notes added." when field is empty
-
-### Running Tests
+Enter the following commands in your terminal to switch to the correct branch.
+Remember to `cd` to the directory where you cloned the repository first.
 
 ```bash
-flutter test
+git fetch origin
+git checkout 6
 ```
 
-## Project Structure
+## Run the app
 
+Open the integrated terminal in Visual Studio Code by first opening the Command
+Palette with **⌘ + Shift + P** (macOS) or **Ctrl + Shift + P** (Windows) and
+typing **Terminal: Create New Terminal** then pressing **Enter**.
+
+In the terminal, run the following commands to install the dependencies and run
+the app in your web browser:
+
+```bash
+flutter pub get
+flutter run
 ```
-sandwich_shop/
-├── lib/
-│   ├── main.dart                    # App entry point and UI components
-│   ├── views/
-│   │   └── app_styles.dart          # Text styles and theme constants
-│   └── repositories/
-│       └── order_repository.dart    # Order state management logic
-├── test/
-│   └── widget_test.dart             # Unit and widget tests
-├── pubspec.yaml                     # Project dependencies
-└── README.md                        # This file
-```
-## Technologies Used
 
-### Framework & Language
-- **Flutter**: 3.0+ - UI framework
-- **Dart**: 2.17+ - Programming language
+## Get support
 
-### Core Packages
-- `flutter/material.dart` - Material Design components
-- Built-in state management (StatefulWidget)
-
-### Development Tools
-- **VS Code** - Primary IDE
-- **Flutter DevTools** - Debugging and profiling
-- **Git** - Version control
-
-### Design Patterns
-- Repository pattern for state management
-- StatefulWidget for reactive UI
-- Separation of concerns (UI, business logic, styling)
-
-**Matthew** - Developer
-- GitHub: [@MJenkins2006](https://github.com/MJenkins2006)
+Use [the dedicated Discord channel](https://discord.com/channels/760155974467059762/1370633732779933806)
+to ask your questions and get help from the community.
+Please provide as much context as possible, including the error messages you are seeing and
+screenshots (you can open Discord in your web browser).
