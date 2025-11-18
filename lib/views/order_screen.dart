@@ -81,7 +81,10 @@ class _OrderScreenState extends State<OrderScreen> {
       MaterialPageRoute<void>(
         builder: (BuildContext context) => CartScreen(cart: _cart),
       ),
-    );
+    ).then((_) {
+      // When returning from the cart screen, refresh to show updated totals.
+      setState(() {});
+    });
   }
 
   List<DropdownMenuEntry<SandwichType>> _buildSandwichTypeEntries() {

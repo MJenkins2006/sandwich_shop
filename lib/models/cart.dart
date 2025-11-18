@@ -26,6 +26,16 @@ class Cart {
     }
   }
 
+  /// Decrease quantity by one. If quantity reaches zero, the item is removed.
+  void decrement(Sandwich sandwich) {
+    remove(sandwich, quantity: 1);
+  }
+
+  /// Remove the sandwich entry entirely from the cart.
+  void removeItem(Sandwich sandwich) {
+    _items.remove(sandwich);
+  }
+
   void clear() {
     _items.clear();
   }
