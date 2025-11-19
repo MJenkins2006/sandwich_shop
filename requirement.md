@@ -145,3 +145,71 @@ flutter test
 - Avoid unrelated refactors.
 
 Would you like me to create this file now in the repo (e.g., `prompt_for_llm.md`) or implement the feature directly and produce apply_patch diffs?
+
+# Prompt for LLM: Add Global Navigation Drawer
+
+Goal
+
+- Add a single, reusable navigation drawer accessible from all app screens in the Sandwich Shop Flutter app. The drawer should provide navigation to: Order screen, Sign Up, Sign In, Cart, and Checkout screens.
+
+Context
+
+- Project root: `lib/` contains the app UI. Keep changes minimal and consistent with existing app patterns and routing.
+- No network requests or third-party auth—drawer only handles navigation.
+
+User stories
+
+- As a user, I want a consistent drawer available from every primary screen so I can quickly move between Order, Sign Up, Sign In, Cart, and Checkout.
+- As a developer, I want the drawer implemented once and reused across screens so maintenance is easy.
+
+Behavior and UX
+
+- The drawer opens from the left via a hamburger menu in the app bar of primary screens.
+- Drawer items: `Orders`, `Sign Up`, `Sign In`, `Cart`, `Checkout` (order and naming consistent with existing routes).
+- When the user is signed in, show their name and a `Sign out` item instead of `Sign In`/`Sign Up` (or show both plus the name, as preferred). Use the existing `AuthService` (or mock) to detect sign-in state.
+- Tapping a drawer item navigates to the corresponding route using the app's `Navigator` / named routes.
+- Drawer should be accessible: proper semantics, tappable area, and support for screen readers.
+
+Implementation guidance for the LLM
+
+- Create a single `Widget` named `AppDrawer` under `lib/views/common/app_drawer.dart` (or reuse a `views/shared/` folder) that builds the drawer contents and accepts an optional `String? currentRoute` to highlight the active item.
+- Add a small helper `Widget` or function to the `AppBar` construction used by main screens to include the hamburger menu that opens `AppDrawer`.
+- Update primary screen files (e.g., Order, Cart, Checkout, SignIn, SignUp) to use the shared `AppBar` or include the hamburger menu so the drawer is available on each screen. Keep modifications minimal — ideally just add `drawer: AppDrawer(),` to `Scaffold` where appropriate.
+- Register or confirm named routes exist in `MaterialApp.routes` (e.g., `/orders`, `/sign-up`, `/sign-in`, `/cart`, `/checkout`) and add them if missing. Use the app's existing route names and structure where possible.
+
+Deliverables (what to create/modify)
+
+- New file: `lib/views/common/app_drawer.dart` — the reusable Drawer widget.
+- Modified files: primary screen widgets (add `drawer: AppDrawer()` to their `Scaffold`), and `lib/main.dart` or the file that sets up `MaterialApp.routes` to ensure the routes above are registered.
+- Tests: add `test/widgets/drawer_navigation_test.dart` with widget tests that:
+	- Pump a screen with the drawer present and verify the hamburger menu exists.
+	- Open the drawer, tap the `Sign In` and `Sign Up` items, and assert navigation to corresponding routes.
+	- Verify that when an `AuthService` mock reports a signed-in user, the drawer displays the user's name and a `Sign out` action.
+
+Acceptance criteria
+
+- Drawer is accessible from all primary screens (Orders, Cart, Checkout, Sign In, Sign Up).
+- Drawer items navigate using named routes present in `MaterialApp.routes`.
+- Signed-in state is reflected in the drawer UI (user name and a sign-out option).
+- Widget tests exist for navigation and signed-in display and pass with `flutter test`.
+
+Constraints and assumptions
+
+- Do not add heavy refactors; prefer adding `drawer: AppDrawer()` to existing `Scaffold`s.
+- No external network or auth libraries — use the existing `AuthService` or the mock `lib/services/auth_service.dart` that the project contains or will contain.
+- Keep theming and styling aligned with current app theme.
+
+Notes for reviewers / future LLM
+
+- If multiple `Scaffold` locations exist, prefer adding the drawer to the app's main screens only (places users would expect navigation). If unsure, add to `lib/main.dart`'s root `Scaffold` or to the `Order` screen and any other top-level screens.
+- Keep the drawer implementation small, focused, and testable. Provide clear unit/widget tests that validate navigation and conditional user UI.
+
+How to run tests
+
+Run:
+
+```powershell
+flutter test
+```
+
+If you prefer, I can implement the `AppDrawer` and tests now and provide apply_patch diffs.
