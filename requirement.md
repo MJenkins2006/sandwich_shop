@@ -61,3 +61,87 @@ The Cart Modification feature enables users of the Sandwich Shop Flutter app to 
 4. Ensure the total price and UI update immediately after any change.
 5. Provide user feedback (snackbar) for remove and update actions.
 6. Handle empty cart states with a clear message.
+
+---
+
+# Prompt for LLM: Add Sign-Up / Sign-In UI (Mock)
+
+- **Project**: Sandwich Shop Flutter app located under `lib/` in a typical Flutter project.
+- **Goal**: Add Sign-Up and Sign-In UI, plus a bottom button on the Order screen that starts the Sign-In flow. No real authentication or backend calls — use a simple local/mock solution.
+- **Constraints**: 
+	- Keep changes minimal and consistent with existing code style.
+	- Add small files under `lib/views/auth/` and `lib/services/`.
+	- Avoid third-party auth packages; optionally use `shared_preferences` only if persistence is desired.
+	- All changes must be testable with `flutter test`.
+
+**Deliverables**
+- New files:
+	- `lib/views/auth/sign_in.dart`
+	- `lib/views/auth/sign_up.dart`
+	- `lib/services/auth_service.dart`
+- Modified files:
+	- The Order screen file (likely in `lib/views/` — locate it; if not present, modify `lib/main.dart`)
+	- App routing to register new routes (use existing `MaterialApp.routes` if present)
+- Tests:
+	- `test/widgets/auth_flow_test.dart` — widget tests for Sign-Up/Sign-In navigation and flows
+	- `test/widgets/order_button_test.dart` — test for button presence/navigation on the Order screen
+- Documentation:
+	- A one-paragraph README note explaining how the mock auth works and how to run tests
+- Patch:
+	- Provide apply_patch-style diffs for all changes
+
+**Acceptance Criteria**
+- **Sign-Up screen** (`/sign-up`):
+	- Fields: full name, email, password
+	- Basic validation: non-empty, password >= 6 chars
+	- On submit: create a local user and navigate to the Order screen
+- **Sign-In screen** (`/sign-in`):
+	- Fields: email, password
+	- Basic validation and match against locally stored credentials (or in-memory user)
+	- On success: return to the Order screen and display the user’s name
+- **Order screen**:
+	- Bottom-aligned button labeled “Sign in / Register” (or “Account” when signed in)
+	- Tapping the button opens the Sign-In screen
+	- When signed in, the Order screen displays the signed-in user’s name
+- **No networking**: No external authentication or network calls made
+- **Tests**:
+	- Widget tests confirm navigation and local sign-in/sign-up behavior
+	- All tests pass with `flutter test`
+
+**Implementation Guidance**
+1. Locate the Order screen file: search `lib/views/` for `order`, `checkout`, `cart`, or `order_screen`. If not found, update `lib/main.dart`.
+2. Add `lib/services/auth_service.dart`:
+	 - Implement a simple singleton `AuthService`:
+		 - `Future<bool> signUp(String name, String email, String password)`
+		 - `Future<bool> signIn(String email, String password)`
+		 - `String? get currentUserName`
+	 - Optionally persist a single user using `shared_preferences` (optional).
+3. Add UI screens:
+	 - `SignUpScreen` (`/sign-up`): `StatefulWidget` with form, validation, calls `AuthService.signUp`, and navigates back to Order screen on success.
+	 - `SignInScreen` (`/sign-in`): `StatefulWidget` with form, validation, calls `AuthService.signIn`, and navigates back on success.
+	 - Use the app’s existing theme/typography.
+4. Update the Order screen:
+	 - Add a bottom `SafeArea` button with consistent styling that opens `/sign-in`.
+	 - When a user is signed in, change the button text (e.g., to the user’s name) or offer “Sign out”.
+5. Register routes:
+	 - Add entries to `MaterialApp.routes`, keeping changes minimal.
+6. Tests:
+	 - Use `testWidgets` to pump the Order screen, verify the button exists, tap to navigate, fill forms, submit, and assert navigation + presence of user name.
+7. Patches:
+	 - Provide `apply_patch` diffs for changed files.
+	 - Run `flutter test` and fix any failing tests before finalizing.
+
+**Helpful Questions (if unclear)**
+- “Which file is the Order screen located in under `lib/views/`?”
+- “Do you prefer `shared_preferences` for persistence, or purely in-memory mock auth?”
+
+**How to run tests**
+```powershell
+flutter test
+```
+
+**Tone & scope**
+- Conservative, minimal changes focused on function and testability.
+- Avoid unrelated refactors.
+
+Would you like me to create this file now in the repo (e.g., `prompt_for_llm.md`) or implement the feature directly and produce apply_patch diffs?
