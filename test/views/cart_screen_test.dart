@@ -138,5 +138,29 @@ void main() {
       expect(find.text('Qty: 3 - £33.00'), findsOneWidget);
       expect(find.text('Total: £33.00'), findsOneWidget);
     });
+
+    testWidgets('shows checkout button when cart has items',
+        (WidgetTester tester) async {
+      final Cart cart = Cart();
+      final Sandwich sandwich = Sandwich(
+        type: SandwichType.veggieDelight,
+        isFootlong: true,
+        breadType: BreadType.white,
+      );
+      cart.add(sandwich, quantity: 1);
+
+      final CartScreen cartScreen = CartScreen(cart: cart);
+      final MaterialApp app = MaterialApp(
+        home: cartScreen,
+      );
+
+      await tester.pumpWidget(app);
+
+      final Finder checkoutFinder = find.widgetWithText(StyledButton, 'Checkout');
+      expect(checkoutFinder, findsOneWidget);
+
+      final StyledButton checkoutButton = tester.widget<StyledButton>(checkoutFinder);
+      expect(checkoutButton.onPressed, isNotNull);
+    });
   });
 }
