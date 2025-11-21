@@ -247,13 +247,7 @@ class _OrderScreenState extends State<OrderScreen> {
                 style: normalText,
                 textAlign: TextAlign.center,
               ),
-              const SizedBox(height: 8),
-              // Signed-in user display
-              Builder(builder: (context) {
-                const Text('Signed in as: Admin', style: normalText, textAlign: TextAlign.center);
-                return const SizedBox.shrink();
-              }),
-              const SizedBox(height: 20),
+              const SizedBox(height: 10),
             ],
           ),
         ),

@@ -28,8 +28,6 @@ class AppDrawer extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text('Sandwich Shop', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
-                  SizedBox(height: 8),
-                  Text('Hello, Admin', style: TextStyle(fontSize: 16)),
                 ],
               ),
             ),
