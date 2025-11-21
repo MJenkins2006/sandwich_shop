@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:sandwich_shop/views/order_screen.dart';
 import 'package:sandwich_shop/views/about_screen.dart';
-import 'package:sandwich_shop/views/auth/sign_in.dart';
-import 'package:sandwich_shop/views/auth/sign_up.dart';
+import 'package:sandwich_shop/views/sign_in_screen.dart';
+import 'package:sandwich_shop/views/sign_up_screen.dart';
 import 'package:sandwich_shop/views/cart_screen.dart';
 import 'package:sandwich_shop/views/checkout_screen.dart';
 import 'package:sandwich_shop/models/cart.dart';
