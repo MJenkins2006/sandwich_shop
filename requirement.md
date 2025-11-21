@@ -144,8 +144,6 @@ flutter test
 - Conservative, minimal changes focused on function and testability.
 - Avoid unrelated refactors.
 
-Would you like me to create this file now in the repo (e.g., `prompt_for_llm.md`) or implement the feature directly and produce apply_patch diffs?
-
 # Prompt for LLM: Add Global Navigation Drawer
 
 Goal
@@ -211,5 +209,3 @@ Run:
 ```powershell
 flutter test
 ```
-
-If you prefer, I can implement the `AppDrawer` and tests now and provide apply_patch diffs.
