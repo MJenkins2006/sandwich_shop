@@ -90,6 +90,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 onPressed: _loading ? null : _submit,
                 child: _loading ? const CircularProgressIndicator() : const Text('Create account'),
               ),
+              const SizedBox(height: 12),
+              TextButton(
+                onPressed: () => Navigator.pushNamed(context, '/sign-in'),
+                child: const Text('Got an account? Sign in'),
+              ),
             ],
           ),
         ),

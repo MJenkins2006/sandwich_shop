@@ -7,13 +7,22 @@ void main() {
     await tester.pumpWidget(
       MaterialApp(
         routes: {
-          '/sign-up': (context) => const Scaffold(body: Center(child: Text('Sign Up'))),
+          '/sign-in': (context) => const Scaffold(body: Center(child: Text('Sign In'))),
         },
         home: const SignUpScreen(),
       ),
     );
     await tester.pumpAndSettle();
   }
+
+  testWidgets('navigates to sign-in route when tapping button', (WidgetTester tester) async {
+    await pumpSignIn(tester);
+
+    await tester.tap(find.text('Got an account? Sign in'));
+    await tester.pumpAndSettle();
+
+    expect(find.text('Sign In'), findsOneWidget);
+  });
 
   testWidgets('Shows create account button', (WidgetTester tester) async {
     await pumpSignIn(tester);
