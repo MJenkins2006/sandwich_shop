@@ -35,7 +35,7 @@ void main() {
 
     // Check for all expected drawer items
     expect(find.text('About'), findsWidgets);
-    expect(find.text('Orders'), findsWidgets);
+    expect(find.text('Sandwich Counter'), findsWidgets);
     expect(find.text('Sign In'), findsWidgets);
     expect(find.text('Sign Up'), findsWidgets);
     expect(find.text('Cart'), findsWidgets);
