@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sandwich_shop/services/auth_service.dart';
+import 'package:sandwich_shop/views/common/app_drawer.dart';
 
 class SignInScreen extends StatefulWidget {
   const SignInScreen({super.key});
@@ -47,7 +48,17 @@ class _SignInScreenState extends State<SignInScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Sign In')),
+      drawer: const AppDrawer(),
+      appBar: AppBar(
+        leading: Builder(builder: (context) {
+          return IconButton(
+            icon: const Icon(Icons.menu),
+            onPressed: () => Scaffold.of(context).openDrawer(),
+            tooltip: 'Open navigation menu',
+          );
+        }),
+        title: const Text('Sign In'),
+      ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Form(

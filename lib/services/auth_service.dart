@@ -7,9 +7,13 @@ class AuthService {
 
   AuthService._internal();
 
+  // Registered user (persisted in-memory for mock)
+  String? _registeredName;
+  String? _registeredEmail;
+  String? _registeredPassword;
+
+  // Currently signed-in user's display name (null when signed out)
   String? _name;
-  String? _email;
-  String? _password;
 
   String? get currentUserName => _name;
 
@@ -21,10 +25,11 @@ class AuthService {
       return false;
     }
 
-    // Store in-memory (mock)
+    // Store in-memory (mock) as registered user and sign them in
+    _registeredName = name;
+    _registeredEmail = email;
+    _registeredPassword = password;
     _name = name;
-    _email = email;
-    _password = password;
 
     // emulate async work
     await Future<void>.delayed(const Duration(milliseconds: 50));
@@ -33,16 +38,17 @@ class AuthService {
 
   Future<bool> signIn(String email, String password) async {
     await Future<void>.delayed(const Duration(milliseconds: 50));
-    if (_email == null) return false;
-    if (email == _email && password == _password) {
+    if (_registeredEmail == null) return false;
+    if (email == _registeredEmail && password == _registeredPassword) {
+      // restore signed-in state
+      _name = _registeredName;
       return true;
     }
     return false;
   }
 
   void signOut() {
+    // keep registered credentials, just clear signed-in session
     _name = null;
-    _email = null;
-    _password = null;
   }
 }

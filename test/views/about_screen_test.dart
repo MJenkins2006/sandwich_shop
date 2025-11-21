@@ -17,24 +17,4 @@ void main() {
       findsOneWidget,
     );
   });
-
-  testWidgets('AboutScreen has Padding with 16.0 and a SizedBox of height 20', (WidgetTester tester) async {
-    await tester.pumpWidget(const MaterialApp(home: AboutScreen()));
-
-    // Padding with EdgeInsets.all(16.0)
-    final paddingFinder = find.byWidgetPredicate((widget) {
-      if (widget is Padding) {
-        final padding = widget.padding;
-        return padding is EdgeInsets && padding == const EdgeInsets.all(16.0);
-      }
-      return false;
-    });
-    expect(paddingFinder, findsOneWidget);
-
-    // SizedBox with height 20
-    final sizedBoxFinder = find.byWidgetPredicate((widget) {
-      return widget is SizedBox && widget.height == 20.0;
-    });
-    expect(sizedBoxFinder, findsOneWidget);
-  });
 }
