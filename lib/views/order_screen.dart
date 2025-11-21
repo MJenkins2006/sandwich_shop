@@ -3,7 +3,6 @@ import 'package:sandwich_shop/views/app_styles.dart';
 import 'package:sandwich_shop/views/cart_screen.dart';
 import 'package:sandwich_shop/models/cart.dart';
 import 'package:sandwich_shop/models/sandwich.dart';
-import 'package:sandwich_shop/views/auth/sign_in.dart';
 import 'package:sandwich_shop/views/common/app_drawer.dart';
 
 class OrderScreen extends StatefulWidget {
