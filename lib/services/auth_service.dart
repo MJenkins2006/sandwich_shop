@@ -38,6 +38,11 @@ class AuthService {
 
   Future<bool> signIn(String email, String password) async {
     await Future<void>.delayed(const Duration(milliseconds: 50));
+    // Built-in hard-coded admin account
+    if (email == 'Admin' && password == 'Admin') {
+      _name = 'Admin';
+      return true;
+    }
     if (_registeredEmail == null) return false;
     if (email == _registeredEmail && password == _registeredPassword) {
       // restore signed-in state
