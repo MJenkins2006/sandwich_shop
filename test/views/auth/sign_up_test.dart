@@ -29,4 +29,14 @@ void main() {
     expect(find.text('Password'), findsOneWidget);
   });
   
+  testWidgets('Shows error texts', (WidgetTester tester) async {
+    await pumpSignIn(tester);
+
+    await tester.tap(find.text('Create account'));
+    await tester.pumpAndSettle();
+
+    expect(find.text('Enter name'), findsOneWidget);
+    expect(find.text('Enter email'), findsOneWidget);
+    expect(find.text('Password at least 6 chars'), findsOneWidget);
+  });
 }

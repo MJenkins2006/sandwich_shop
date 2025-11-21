@@ -13,7 +13,21 @@ class _SignInScreenState extends State<SignInScreen> {
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-  final bool _loading = false;
+  bool _loading = false;
+
+  Future<void> _submit() async {
+    if (!_formKey.currentState!.validate()) return;
+    setState(() {
+      _loading = true;
+    });
+
+    await Future<void>.delayed(const Duration(milliseconds: 200));
+
+    setState(() {
+      _loading = false;
+      _emailController.text.trim();
+    });
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -65,7 +79,7 @@ class _SignInScreenState extends State<SignInScreen> {
               ),
               const SizedBox(height: 20),
               ElevatedButton(
-                onPressed: _loading ? null : () => print('Sign in pressed'),
+                onPressed: _loading ? null : _submit,
                 child: _loading ? const CircularProgressIndicator() : const Text('Sign In'),
               ),
               const SizedBox(height: 12),

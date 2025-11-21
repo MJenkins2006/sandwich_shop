@@ -14,7 +14,20 @@ class _SignUpScreenState extends State<SignUpScreen> {
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-  final bool _loading = false;
+  bool _loading = false;
+
+  Future<void> _submit() async {
+    if (!_formKey.currentState!.validate()) return;
+    setState(() {
+      _loading = true;
+    });
+
+    await Future<void>.delayed(const Duration(milliseconds: 200));
+
+    setState(() {
+      _loading = false;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -74,7 +87,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
               ),
               const SizedBox(height: 20),
               ElevatedButton(
-                onPressed: _loading ? null : () => print('Create account pressed'),
+                onPressed: _loading ? null : _submit,
                 child: _loading ? const CircularProgressIndicator() : const Text('Create account'),
               ),
             ],
