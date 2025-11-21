@@ -36,6 +36,7 @@ class AppDrawer extends StatelessWidget {
                 ],
               ),
             ),
+            _buildTile(context, 'About', '/about'),
             _buildTile(context, 'Orders', '/orders'),
             if (!(auth.isSignedIn)) _buildTile(context, 'Sign In', '/sign-in'),
             if (!(auth.isSignedIn)) _buildTile(context, 'Sign Up', '/sign-up'),
