@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sandwich_shop/services/auth_service.dart';
 import 'package:sandwich_shop/views/common/app_drawer.dart';
+import 'package:sandwich_shop/views/app_styles.dart';
 
 class SignInScreen extends StatefulWidget {
   const SignInScreen({super.key});
@@ -57,7 +58,21 @@ class _SignInScreenState extends State<SignInScreen> {
             tooltip: 'Open navigation menu',
           );
         }),
-        title: const Text('Sign In'),
+        title: Row(
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(right: 8.0),
+              child: SizedBox(
+                height: 36,
+                child: Image.asset('assets/images/logo.png'),
+              ),
+            ),
+            const Text(
+              'Sign in',
+              style: heading1,
+            ),
+          ],
+        ),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),

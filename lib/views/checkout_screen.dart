@@ -137,7 +137,21 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
             tooltip: 'Open navigation menu',
           );
         }),
-        title: const Text('Checkout', style: heading1),
+        title: Row(
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(right: 8.0),
+              child: SizedBox(
+                height: 36,
+                child: Image.asset('assets/images/logo.png'),
+              ),
+            ),
+            const Text(
+              'Checkout',
+              style: heading1,
+            ),
+          ],
+        ),
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16.0),
