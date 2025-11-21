@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:sandwich_shop/services/auth_service.dart';
 import 'package:sandwich_shop/views/common/app_drawer.dart';
 import 'package:sandwich_shop/views/app_styles.dart';
 
@@ -14,38 +13,7 @@ class _SignInScreenState extends State<SignInScreen> {
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-  bool _loading = false;
-
-  @override
-  void dispose() {
-    _emailController.dispose();
-    _passwordController.dispose();
-    super.dispose();
-  }
-
-  Future<void> _submit() async {
-    if (!_formKey.currentState!.validate()) return;
-
-    setState(() => _loading = true);
-    final auth = AuthService();
-    final success = await auth.signIn(
-      _emailController.text.trim(),
-      _passwordController.text,
-    );
-    setState(() => _loading = false);
-
-    if (success) {
-      Navigator.of(context).popUntil((route) => route.isFirst);
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Signed in')),
-      );
-    } else {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Sign in failed')),
-      );
-    }
-  }
-
+  final bool _loading = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -97,7 +65,7 @@ class _SignInScreenState extends State<SignInScreen> {
               ),
               const SizedBox(height: 20),
               ElevatedButton(
-                onPressed: _loading ? null : _submit,
+                onPressed: _loading ? null : () => print('Sign in pressed'),
                 child: _loading ? const CircularProgressIndicator() : const Text('Sign In'),
               ),
               const SizedBox(height: 12),

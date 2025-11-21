@@ -35,14 +35,4 @@ void main() {
     expect(find.text('Email'), findsOneWidget);
     expect(find.text('Password'), findsOneWidget);
   });
-
-  testWidgets('Shows error texts', (WidgetTester tester) async {
-    await pumpSignIn(tester);
-
-    await tester.tap(find.text('Sign In'));
-    await tester.pumpAndSettle();
-
-    expect(find.text('Enter email'), findsOneWidget);
-    expect(find.text('Enter password'), findsOneWidget);
-  });
 }

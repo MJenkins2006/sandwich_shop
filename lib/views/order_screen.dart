@@ -3,7 +3,6 @@ import 'package:sandwich_shop/views/app_styles.dart';
 import 'package:sandwich_shop/views/cart_screen.dart';
 import 'package:sandwich_shop/models/cart.dart';
 import 'package:sandwich_shop/models/sandwich.dart';
-import 'package:sandwich_shop/services/auth_service.dart';
 import 'package:sandwich_shop/views/auth/sign_in.dart';
 import 'package:sandwich_shop/views/common/app_drawer.dart';
 
@@ -252,34 +251,10 @@ class _OrderScreenState extends State<OrderScreen> {
               const SizedBox(height: 8),
               // Signed-in user display
               Builder(builder: (context) {
-                final auth = AuthService();
-                if (auth.isSignedIn && auth.currentUserName != null) {
-                  return Text('Signed in as: ${auth.currentUserName}', style: normalText, textAlign: TextAlign.center);
-                }
+                const Text('Signed in as: Admin', style: normalText, textAlign: TextAlign.center);
                 return const SizedBox.shrink();
               }),
               const SizedBox(height: 20),
-              // Account button placed inside scrollable content to avoid overlaying widgets
-              SafeArea(
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
-                  child: ElevatedButton(
-                    onPressed: () {
-                      Navigator.push<void>(
-                        context,
-                        MaterialPageRoute<void>(builder: (context) => const SignInScreen()),
-                      ).then((_) => setState(() {}));
-                    },
-                    child: Builder(builder: (context) {
-                      final auth = AuthService();
-                      if (auth.isSignedIn && auth.currentUserName != null) {
-                        return Text('Account: ${auth.currentUserName}');
-                      }
-                      return const Text('Sign in / Register');
-                    }),
-                  ),
-                ),
-              ),
             ],
           ),
         ),

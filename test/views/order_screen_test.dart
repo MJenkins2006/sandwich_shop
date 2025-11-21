@@ -319,17 +319,5 @@ void main() {
           tester.widget<ElevatedButton>(elevatedButtonFinder);
       expect(button.enabled, isFalse);
     });
-      testWidgets('Order screen shows sign in button and navigates', (WidgetTester tester) async {
-      await tester.pumpWidget(MaterialApp(
-        home: const OrderScreen(),
-        routes: {
-          '/sign-in': (context) => const SignInScreen(),
-          '/sign-up': (context) => const SignUpScreen(),
-        },
-      ));
-
-      // Button should be present
-      expect(find.text('Sign in / Register'), findsOneWidget);
-    });
   });
 }

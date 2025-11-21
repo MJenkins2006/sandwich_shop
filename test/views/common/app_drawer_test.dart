@@ -1,13 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:sandwich_shop/main.dart';
-import 'package:sandwich_shop/services/auth_service.dart';
 
 void main() {
-  setUp(() {
-    // ensure signed out before each test
-    AuthService().signOut();
-  });
 
   testWidgets('Drawer opens and navigates to Sign In', (WidgetTester tester) async {
     await tester.pumpWidget(const App());
