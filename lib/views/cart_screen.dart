@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sandwich_shop/views/app_styles.dart';
 import 'package:sandwich_shop/views/order_screen.dart';
-import 'package:sandwich_shop/views/common/app_drawer.dart';
 import 'package:sandwich_shop/models/cart.dart';
 import 'package:sandwich_shop/models/sandwich.dart';
 import 'package:sandwich_shop/repositories/pricing_repository.dart';
@@ -19,26 +18,6 @@ class CartScreen extends StatefulWidget {
 }
 
 class _CartScreenState extends State<CartScreen> {
-  void _goBack() {
-    Navigator.pop(context);
-  }
-
-  String _getSizeText(bool isFootlong) {
-    if (isFootlong) {
-      return 'Footlong';
-    } else {
-      return 'Six-inch';
-    }
-  }
-
-  double _getItemPrice(Sandwich sandwich, int quantity) {
-    final PricingRepository pricingRepository = PricingRepository();
-    return pricingRepository.calculatePrice(
-      quantity: quantity,
-      isFootlong: sandwich.isFootlong,
-    );
-  }
-
   Future<void> _navigateToCheckout() async {
     if (widget.cart.items.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -78,32 +57,70 @@ class _CartScreenState extends State<CartScreen> {
     }
   }
 
+  String _getSizeText(bool isFootlong) {
+    if (isFootlong) {
+      return 'Footlong';
+    } else {
+      return 'Six-inch';
+    }
+  }
+
+  double _getItemPrice(Sandwich sandwich, int quantity) {
+    final PricingRepository pricingRepository = PricingRepository();
+    return pricingRepository.calculatePrice(
+      quantity: quantity,
+      isFootlong: sandwich.isFootlong,
+    );
+  }
+
+  void _incrementQuantity(Sandwich sandwich) {
+    setState(() {
+      widget.cart.add(sandwich, quantity: 1);
+    });
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(content: Text('Quantity increased')),
+    );
+  }
+
+  void _decrementQuantity(Sandwich sandwich) {
+    final wasPresent = widget.cart.items.containsKey(sandwich);
+    setState(() {
+      widget.cart.remove(sandwich, quantity: 1);
+    });
+    if (!widget.cart.items.containsKey(sandwich) && wasPresent) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Item removed from cart')),
+      );
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Quantity decreased')),
+      );
+    }
+  }
+
+  void _removeItem(Sandwich sandwich) {
+    setState(() {
+      widget.cart.remove(sandwich, quantity: widget.cart.getQuantity(sandwich));
+    });
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(content: Text('Item removed from cart')),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: const AppDrawer(),
       appBar: AppBar(
-        leading: Builder(builder: (context) {
-          return IconButton(
-            icon: const Icon(Icons.menu),
-            onPressed: () => Scaffold.of(context).openDrawer(),
-            tooltip: 'Open navigation menu',
-          );
-        }),
-        title: Row(
-          children: [
-            Padding(
-              padding: const EdgeInsets.only(right: 8.0),
-              child: SizedBox(
-                height: 36,
-                child: Image.asset('assets/images/logo.png'),
-              ),
-            ),
-            const Text(
-              'Cart View',
-              style: heading1,
-            ),
-          ],
+        leading: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: SizedBox(
+            height: 100,
+            child: Image.asset('assets/images/logo.png'),
+          ),
+        ),
+        title: const Text(
+          'Cart View',
+          style: heading1,
         ),
       ),
       body: Center(
@@ -112,186 +129,80 @@ class _CartScreenState extends State<CartScreen> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               const SizedBox(height: 20),
-              if (widget.cart.isEmpty) ...[
-                const SizedBox(height: 40),
-                Icon(Icons.remove_shopping_cart, size: 72, color: Colors.grey[600]),
-                const SizedBox(height: 12),
-                const Text('Your cart is empty', style: heading2, textAlign: TextAlign.center),
-                const SizedBox(height: 8),
+              if (widget.cart.items.isEmpty)
                 const Text(
-                  'Add items from the order screen before checking out.',
-                  style: normalText,
-                  textAlign: TextAlign.center,
-                ),
-                const SizedBox(height: 20),
-                Center(
-                  child: StyledButton(
-                    onPressed: _goBack,
-                    icon: Icons.arrow_back,
-                    label: 'Back to Order',
-                    backgroundColor: Colors.grey,
-                  ),
-                ),
-                const SizedBox(height: 20),
-                // Keep legacy total text for compatibility with tests and callers
-                Text(
-                  'Total: £${widget.cart.totalPrice.toStringAsFixed(2)}',
+                  'Your cart is empty.',
                   style: heading2,
                   textAlign: TextAlign.center,
-                ),
-                const SizedBox(height: 20),
-              ] else ...[
+                )
+              else
                 for (MapEntry<Sandwich, int> entry in widget.cart.items.entries)
-                  Card(
-                    margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                    child: Padding(
-                      padding: const EdgeInsets.all(12.0),
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
+                  Column(
+                    children: [
+                      Text(entry.key.name, style: heading2),
+                      Text(
+                        '${_getSizeText(entry.key.isFootlong)} on ${entry.key.breadType.name} bread',
+                        style: normalText,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Expanded(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(entry.key.name, style: heading2),
-                                Text(
-                                  '${_getSizeText(entry.key.isFootlong)} on ${entry.key.breadType.name} bread',
-                                  style: normalText,
-                                ),
-                              ],
-                            ),
-                          ),
-                          Row(
-                            children: [
-                              IconButton(
-                                icon: const Icon(Icons.remove),
-                                onPressed: entry.value > 0
-                                    ? () {
-                                        final Sandwich sandwich = entry.key;
-                                        final int previousQty = entry.value;
-                                        setState(() {
-                                          widget.cart.decrement(sandwich);
-                                        });
-
-                                        final int newQty = previousQty - 1;
-                                        if (newQty <= 0) {
-                                          ScaffoldMessenger.of(context).showSnackBar(
-                                            SnackBar(
-                                              content: Text('Removed ${sandwich.name} from cart'),
-                                              action: SnackBarAction(
-                                                label: 'UNDO',
-                                                onPressed: () {
-                                                  setState(() {
-                                                    widget.cart.add(sandwich, quantity: previousQty);
-                                                  });
-                                                },
-                                              ),
-                                            ),
-                                          );
-                                        } else {
-                                          ScaffoldMessenger.of(context).showSnackBar(
-                                            SnackBar(
-                                              content: Text('Updated ${sandwich.name} quantity to $newQty'),
-                                              duration: const Duration(seconds: 1),
-                                            ),
-                                          );
-                                        }
-                                      }
-                                    : null,
-                              ),
-                              Text('${entry.value}', style: heading2),
-                              IconButton(
-                                icon: const Icon(Icons.add),
-                                onPressed: () {
-                                  final Sandwich sandwich = entry.key;
-                                  final int previousQty = entry.value;
-                                  setState(() {
-                                    widget.cart.add(sandwich);
-                                  });
-                                  final int newQty = previousQty + 1;
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                    SnackBar(
-                                      content: Text('Updated ${sandwich.name} quantity to $newQty'),
-                                      duration: const Duration(seconds: 1),
-                                    ),
-                                  );
-                                },
-                              ),
-                            ],
-                          ),
-                          const SizedBox(width: 8),
                           IconButton(
-                            icon: const Icon(Icons.delete),
-                            color: Colors.redAccent,
-                            tooltip: 'Remove item',
-                            onPressed: () {
-                              final Sandwich sandwich = entry.key;
-                              final int removedQty = entry.value;
-                              setState(() {
-                                widget.cart.removeItem(sandwich);
-                              });
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(
-                                  content: Text('Removed ${sandwich.name} from cart'),
-                                  action: SnackBarAction(
-                                    label: 'UNDO',
-                                    onPressed: () {
-                                      setState(() {
-                                        widget.cart.add(sandwich, quantity: removedQty);
-                                      });
-                                    },
-                                  ),
-                                ),
-                              );
-                            },
+                            icon: const Icon(Icons.remove),
+                            onPressed: () => _decrementQuantity(entry.key),
                           ),
-                          const SizedBox(width: 8),
+                          Text(
+                            'Qty: ${entry.value}',
+                            style: normalText,
+                          ),
+                          IconButton(
+                            icon: const Icon(Icons.add),
+                            onPressed: () => _incrementQuantity(entry.key),
+                          ),
+                          const SizedBox(width: 16),
                           Text(
                             '£${_getItemPrice(entry.key, entry.value).toStringAsFixed(2)}',
                             style: normalText,
                           ),
-                        // Legacy formatted line for tests and backward compatibility
-                        const SizedBox(width: 8),
-                        Expanded(
-                          child: Text(
-                            'Qty: ${entry.value} - £${_getItemPrice(entry.key, entry.value).toStringAsFixed(2)}',
-                            style: normalText,
+                          IconButton(
+                            icon: const Icon(Icons.delete),
+                            tooltip: 'Remove item',
+                            onPressed: () => _removeItem(entry.key),
                           ),
-                        ),
                         ],
                       ),
-                    ),
+                      const SizedBox(height: 20),
+                    ],
                   ),
-                const SizedBox(height: 8),
-                Text(
-                  'Total: £${widget.cart.totalPrice.toStringAsFixed(2)}',
-                  style: heading2,
-                  textAlign: TextAlign.center,
-                ),
-                Builder(
-                  builder: (BuildContext context) {
-                    final bool cartHasItems = widget.cart.items.isNotEmpty;
-                    if (cartHasItems) {
-                      return StyledButton(
-                        onPressed: _navigateToCheckout,
-                        icon: Icons.payment,
-                        label: 'Checkout',
-                        backgroundColor: Colors.orange,
-                      );
-                    } else {
-                      return const SizedBox.shrink();
-                    }
-                  },
-                ),
-                const SizedBox(height: 20),
-                StyledButton(
-                  onPressed: _goBack,
-                  icon: Icons.arrow_back,
-                  label: 'Back to Order',
-                  backgroundColor: Colors.grey,
-                ),
-                const SizedBox(height: 20),
-              ],
+              Text(
+                'Total: £${widget.cart.totalPrice.toStringAsFixed(2)}',
+                style: heading2,
+                textAlign: TextAlign.center,
+              ),
+              const SizedBox(height: 20),
+              Builder(
+                builder: (BuildContext context) {
+                  final bool cartHasItems = widget.cart.items.isNotEmpty;
+                  if (cartHasItems) {
+                    return StyledButton(
+                      onPressed: _navigateToCheckout,
+                      icon: Icons.payment,
+                      label: 'Checkout',
+                      backgroundColor: Colors.orange,
+                    );
+                  } else {
+                    return const SizedBox.shrink();
+                  }
+                },
+              ),
+              const SizedBox(height: 20),
+              StyledButton(
+                onPressed: () => Navigator.pop(context),
+                icon: Icons.arrow_back,
+                label: 'Back to Order',
+                backgroundColor: Colors.grey,
+              ),
+              const SizedBox(height: 20),
             ],
           ),
         ),

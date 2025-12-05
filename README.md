@@ -39,7 +39,7 @@ You may want to change directory (`cd`) to the directory where you want to clone
 repository first.
 
 ```bash
-git clone --branch 6 https://github.com/manighahrmani/sandwich_shop
+git clone --branch 7 https://github.com/manighahrmani/sandwich_shop
 cd sandwich_shop
 code .
 ```
@@ -51,7 +51,7 @@ Remember to `cd` to the directory where you cloned the repository first.
 
 ```bash
 git fetch origin
-git checkout 6
+git checkout 7
 ```
 
 ## Run the app
@@ -74,11 +74,3 @@ Use [the dedicated Discord channel](https://discord.com/channels/760155974467059
 to ask your questions and get help from the community.
 Please provide as much context as possible, including the error messages you are seeing and
 screenshots (you can open Discord in your web browser).
-
-Mock auth note
-----------------
-This project includes a minimal mock authentication flow used for UI testing and demos. It stores a single user in memory via `lib/services/auth_service.dart` and provides `/sign-in` and `/sign-up` screens. No network calls or external services are used. To run the widget tests that exercise the auth screens, run:
-
-```powershell
-flutter test
-```
