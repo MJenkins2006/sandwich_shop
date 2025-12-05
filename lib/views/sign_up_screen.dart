@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:sandwich_shop/views/common_widgets.dart';
-import 'package:sandwich_shop/views/app_styles.dart';
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({super.key});
