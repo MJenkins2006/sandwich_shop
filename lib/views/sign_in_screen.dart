@@ -49,7 +49,7 @@ class _SignInScreenState extends State<SignInScreen> {
                 child: Image.asset('assets/images/logo.png'),
               ),
             ),
-            const Text(
+            Text(
               'Sign in',
               style: heading1,
             ),

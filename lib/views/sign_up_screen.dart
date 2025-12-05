@@ -50,7 +50,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 child: Image.asset('assets/images/logo.png'),
               ),
             ),
-            const Text(
+            Text(
               'Sign up',
               style: heading1,
             ),

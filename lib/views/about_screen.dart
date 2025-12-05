@@ -26,14 +26,14 @@ class AboutScreen extends StatelessWidget {
                 child: Image.asset('assets/images/logo.png'),
               ),
             ),
-            const Text(
+            Text(
               'About Us',
               style: heading1,
             ),
           ],
         ),
       ),
-      body: const Padding(
+      body: Padding(
         padding: EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
