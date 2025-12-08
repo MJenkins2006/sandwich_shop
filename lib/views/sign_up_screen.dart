@@ -32,7 +32,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       drawer: const AppDrawer(),
-      appBar: buildHeader(context, 'Profile'),
+      appBar: buildAppBar(context, 'Profile'),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Form(

@@ -163,7 +163,7 @@ class _OrderScreenState extends State<OrderScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: buildHeader(context, 'Sandwich Counter'),
+      appBar: buildAppBar(context, 'Sandwich Counter'),
       body: Center(
         child: SingleChildScrollView(
           child: Column(

@@ -44,7 +44,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
     }
 
     return Scaffold(
-      appBar: buildHeader(context, 'Settings'),
+      appBar: buildAppBar(context, 'Settings'),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(

@@ -50,7 +50,7 @@ class AppDrawer extends StatelessWidget {
   }
 }
 
-AppBar buildHeader(BuildContext context, String title) {
+AppBar buildAppBar(BuildContext context, String title) {
   return AppBar(
     leading: Padding(
       padding: const EdgeInsets.all(8.0),
