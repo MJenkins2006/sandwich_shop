@@ -37,7 +37,7 @@ class AppDrawer extends StatelessWidget {
               ),
             ),
             _buildTile(context, 'About', '/about'),
-            _buildTile(context, 'Sandwich Counter', '/orders'),
+            _buildTile(context, 'Sandwich Counter', '/'),
             _buildTile(context, 'Sign In', '/sign-in'),
             _buildTile(context, 'Sign Up', '/sign-up'),
             _buildTile(context, 'Cart', '/cart'),
