@@ -52,36 +52,10 @@ class AppDrawer extends StatelessWidget {
 
 AppBar buildAppBar(BuildContext context, String title, {bool showDrawerIcon = true}) {
   return AppBar(
-    leading: showDrawerIcon
-        ? Builder(
-            builder: (innerContext) {
-              return IconButton(
-                icon: const Icon(Icons.menu),
-                onPressed: () => Scaffold.of(innerContext).openDrawer(),
-              );
-            },
-          )
-        : Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: SizedBox(
-              height: 40,
-              child: Image.asset('assets/images/logo.png'),
-            ),
-          ),
-    title: showDrawerIcon
-        ? Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Text(
-                title,
-                style: heading1,
-              ),
-            ],
-          )
-        : Text(
-            title,
-            style: heading1,
-          ),
+    title: Text(
+      title,
+      style: heading1,
+    ),
     actions: [
       Consumer<Cart>(
         builder: (context, cart, child) {
