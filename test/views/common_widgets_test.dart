@@ -51,6 +51,16 @@ void main() {
       // Check for AppBar title on the home screen
       expect(find.text('Sandwich Counter'), findsWidgets);
 
+      // Check for image logo
+      expect(find.byWidgetPredicate(
+          (widget) =>
+            widget is Image &&
+            widget.image is AssetImage &&
+            (widget.image as AssetImage).assetName == 'assets/images/logo.png',
+        ),
+        findsOneWidget,
+      );
+
       // Check for shopping cart icon
       expect(find.byIcon(Icons.shopping_cart), findsWidgets);
     });
