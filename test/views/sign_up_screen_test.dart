@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:sandwich_shop/views/sign_up_screen.dart';
+import '../test_helpers.dart';
 
 void main() {
   Future<void> pumpSignIn(WidgetTester tester) async {
     await tester.pumpWidget(
-      MaterialApp(
+      testApp(
+        const SignUpScreen(),
         routes: {
           '/sign-in': (context) => const Scaffold(body: Center(child: Text('Sign In'))),
         },
-        home: const SignUpScreen(),
       ),
     );
     await tester.pumpAndSettle();

@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:sandwich_shop/views/sign_in_screen.dart';
+import '../test_helpers.dart';
 
 void main() {
   Future<void> pumpSignIn(WidgetTester tester) async {
     await tester.pumpWidget(
-      MaterialApp(
+      testApp(
+        const SignInScreen(),
         routes: {
           '/sign-up': (context) => const Scaffold(body: Center(child: Text('Sign Up'))),
         },
-        home: const SignInScreen(),
       ),
     );
     await tester.pumpAndSettle();
@@ -26,7 +27,7 @@ void main() {
   testWidgets('Shows sign in button', (WidgetTester tester) async {
     await pumpSignIn(tester);
 
-    expect(find.text('Sign in'), findsOneWidget);
+    expect(find.text('Sign In'), findsOneWidget);
   });
 
   testWidgets('Shows Email and Password textboxes', (WidgetTester tester) async {
