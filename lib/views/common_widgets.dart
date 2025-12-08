@@ -19,18 +19,20 @@ class AppDrawer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     return Drawer(
       child: SafeArea(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             DrawerHeader(
-              decoration: BoxDecoration(color: Theme.of(context).primaryColorLight),
+              decoration:
+                  BoxDecoration(color: Theme.of(context).primaryColorLight),
               child: const Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('Sandwich Shop', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+                  Text('Sandwich Shop',
+                      style:
+                          TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
                 ],
               ),
             ),
@@ -48,39 +50,35 @@ class AppDrawer extends StatelessWidget {
   }
 }
 
-
-PreferredSizeWidget buildHeader(BuildContext context, String title) {
-    return PreferredSize(
-        preferredSize: const Size.fromHeight(kToolbarHeight),
-        child: AppBar(
-          leading: Padding(
+AppBar buildHeader(BuildContext context, String title) {
+  return AppBar(
+    leading: Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: SizedBox(
+        height: 100,
+        child: Image.asset('assets/images/logo.png'),
+      ),
+    ),
+    title: Text(
+      title,
+      style: heading1,
+    ),
+    actions: [
+      Consumer<Cart>(
+        builder: (context, cart, child) {
+          return Padding(
             padding: const EdgeInsets.all(8.0),
-            child: SizedBox(
-              height: 100,
-              child: Image.asset('assets/images/logo.png'),
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                const Icon(Icons.shopping_cart),
+                const SizedBox(width: 4),
+                Text('${cart.countOfItems}'),
+              ],
             ),
-          ),
-          title: Text(
-            title,
-            style: heading1,
-          ),
-          actions: [
-            Consumer<Cart>(
-              builder: (context, cart, child) {
-                return Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      const Icon(Icons.shopping_cart),
-                      const SizedBox(width: 4),
-                      Text('${cart.countOfItems}'),
-                    ],
-                  ),
-                );
-              },
-            ),
-          ],
-        ),
-    );
+          );
+        },
+      ),
+    ],
+  );
 }
