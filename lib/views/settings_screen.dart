@@ -37,7 +37,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
   Widget build(BuildContext context) {
     if (_isLoading) {
       return const Scaffold(
-        drawer: const AppDrawer(),
+        drawer: AppDrawer(),
         body: Center(
           child: CircularProgressIndicator(),
         ),
