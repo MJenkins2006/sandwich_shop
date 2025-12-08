@@ -11,12 +11,12 @@ class AboutScreen extends StatelessWidget {
       drawer: const AppDrawer(),
       appBar: buildHeader(context, 'About Us'),
       body: Padding(
-        padding: EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text('Welcome to Sandwich Shop!', style: heading2),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             Text(
               'We are a family-owned business dedicated to serving the best sandwiches in town. ',
               style: normalText,
