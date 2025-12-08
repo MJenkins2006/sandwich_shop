@@ -50,6 +50,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: const AppDrawer(),
       appBar: buildAppBar(context, 'Checkout'),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16.0),

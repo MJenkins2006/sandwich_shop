@@ -107,6 +107,7 @@ class _CartScreenState extends State<CartScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: const AppDrawer(),
       appBar: buildAppBar(context, 'Cart View'),
       body: Center(
         child: SingleChildScrollView(
