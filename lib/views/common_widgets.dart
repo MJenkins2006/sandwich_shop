@@ -52,9 +52,23 @@ class AppDrawer extends StatelessWidget {
 
 AppBar buildAppBar(BuildContext context, String title, {bool showDrawerIcon = true}) {
   return AppBar(
-    title: Text(
-      title,
-      style: heading1,
+    title: Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Image.asset(
+          'assets/images/logo.png',
+          height: 32,
+          // Provide a safe fallback for tests or missing asset scenarios.
+          errorBuilder: (context, error, stackTrace) {
+            return const SizedBox(width: 32, height: 32);
+          },
+        ),
+        const SizedBox(width: 32),
+        Text(
+          title,
+          style: heading1,
+        ),
+      ],
     ),
     actions: [
       Consumer<Cart>(
