@@ -40,7 +40,7 @@ void main() {
       expect(find.text('Sign In'), findsWidgets);
       expect(find.text('Sign Up'), findsWidgets);
       expect(find.text('Cart'), findsWidgets);
-      expect(find.text('Checkout'), findsWidgets);
+      expect(find.text('Profile'), findsWidgets);
 
     });
   });
