@@ -94,6 +94,7 @@ void main() {
       await tester.tap(signInTile.first);
       await tester.pumpAndSettle();
 
+      expect(find.text('Need an account? Register'), findsWidgets);
       expect(find.text('4'), findsWidgets);
     });
   });
