@@ -78,9 +78,15 @@ AppBar buildAppBar(BuildContext context, String title, {bool showDrawerIcon = tr
             child: Row(
               mainAxisSize: MainAxisSize.min,
               children: [
-                const Icon(Icons.shopping_cart),
+                Icon(
+                  Icons.shopping_cart,
+                  size: AppStyles.baseFontSize + 4,
+                ),
                 const SizedBox(width: 4),
-                Text('${cart.countOfItems}'),
+                Text(
+                  '${cart.countOfItems}',
+                  style: normalText,
+                ),
               ],
             ),
           );
