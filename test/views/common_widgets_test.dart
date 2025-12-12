@@ -118,4 +118,36 @@ void main() {
       expect(find.text('4'), findsWidgets);
     });
   });
+  group('StyledButton tests', () {
+    testWidgets('StyledButton has correct values', (WidgetTester tester) async {
+
+      bool pressed = false;
+
+      await tester.pumpWidget(MaterialApp(
+        home: Scaffold(
+          body: StyledButton(
+            onPressed: () { pressed = true; },
+            icon: Icons.add,
+            label: 'Test Button',
+            backgroundColor: Colors.red,
+          ),
+        ),
+      ));
+
+      // Label and icon present
+      expect(find.text('Test Button'), findsOneWidget);
+      expect(find.byIcon(Icons.add), findsOneWidget);
+
+      // ElevatedButton has the expected background color
+      final ElevatedButton elevated = tester.widget(find.byType(ElevatedButton));
+      final ButtonStyle? style = elevated.style;
+      final Color? bg = style?.backgroundColor?.resolve({});
+      expect(bg, Colors.red);
+
+      // onPressed works
+      await tester.tap(find.byType(ElevatedButton));
+      await tester.pumpAndSettle();
+      expect(pressed, isTrue);
+    });
+  });
 }
