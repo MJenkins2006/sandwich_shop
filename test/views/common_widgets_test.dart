@@ -25,7 +25,7 @@ void main() {
       expect(find.text('Need an account? Register'), findsWidgets);
     });
 
-    testWidgets('Drawer shows all items', (WidgetTester tester) async {
+    testWidgets('Drawer shows all items on multiple screens', (WidgetTester tester) async {
       await tester.pumpWidget(const App());
 
       // open the drawer via the menu icon
@@ -35,6 +35,26 @@ void main() {
       await tester.pumpAndSettle();
 
       // Check for all expected drawer items
+      expect(find.text('Sandwich Shop'), findsWidgets);
+      expect(find.text('About'), findsWidgets);
+      expect(find.text('Sandwich Counter'), findsWidgets);
+      expect(find.text('Sign In'), findsWidgets);
+      expect(find.text('Sign Up'), findsWidgets);
+      expect(find.text('Cart'), findsWidgets);
+      expect(find.text('Profile'), findsWidgets);
+
+      await tester.tap(find.text('About').first);
+      await tester.pumpAndSettle();      
+
+      // We should be on the About screen (AppBar title 'About')
+      expect(find.text('Welcome to Sandwich Shop!'), findsWidgets);
+
+      // open the drawer via the menu icon
+      await tester.tap(menuButton.first);
+      await tester.pumpAndSettle();
+
+      // Check for all expected drawer items
+      expect(find.text('Sandwich Shop'), findsWidgets);
       expect(find.text('About'), findsWidgets);
       expect(find.text('Sandwich Counter'), findsWidgets);
       expect(find.text('Sign In'), findsWidgets);
