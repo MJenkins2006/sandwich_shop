@@ -1,14 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:provider/provider.dart';
 import 'package:sandwich_shop/views/profile_screen.dart';
-import '../test_helpers.dart';
+import 'package:sandwich_shop/models/cart.dart';
+import '../helpers/test_helpers.dart';
 
 void main() {
   group('ProfileScreen', () {
     testWidgets('displays initial UI elements correctly',
         (WidgetTester tester) async {
+      final Cart cart = Cart();
       const ProfileScreen profileScreen = ProfileScreen();
-      await tester.pumpWidget(testApp(profileScreen));
+      final MaterialApp app = createTestApp(profileScreen, cart: cart);
+
+      await tester.pumpWidget(app);
 
       expect(find.text('Profile'), findsOneWidget);
       expect(find.text('Enter your details:'), findsOneWidget);
@@ -19,20 +24,28 @@ void main() {
       expect(find.byType(ElevatedButton), findsOneWidget);
     });
 
-    testWidgets('has proper layout structure', (WidgetTester tester) async {
+    testWidgets('displays common app bar elements correctly',
+        (WidgetTester tester) async {
+      final Cart cart = Cart();
       const ProfileScreen profileScreen = ProfileScreen();
-      await tester.pumpWidget(testApp(profileScreen));
+      final MaterialApp app = createTestApp(profileScreen, cart: cart);
 
-      expect(find.byType(Scaffold), findsOneWidget);
-      expect(find.byType(AppBar), findsOneWidget);
+      await tester.pumpWidget(app);
+
+      testCommonAppBarLogo(tester);
+      testCartIndicator(tester, 0);
+      testBasicScaffoldStructure(tester);
       expect(find.byType(Column), findsOneWidget);
       expect(find.byType(SizedBox), findsWidgets);
     });
 
     testWidgets('text fields accept input correctly',
         (WidgetTester tester) async {
+      final Cart cart = Cart();
       const ProfileScreen profileScreen = ProfileScreen();
-      await tester.pumpWidget(testApp(profileScreen));
+      final MaterialApp app = createTestApp(profileScreen, cart: cart);
+
+      await tester.pumpWidget(app);
 
       final Finder nameFieldFinder =
           find.widgetWithText(TextField, 'Your Name');
@@ -49,8 +62,11 @@ void main() {
 
     testWidgets('shows validation error when name field is empty',
         (WidgetTester tester) async {
+      final Cart cart = Cart();
       const ProfileScreen profileScreen = ProfileScreen();
-      await tester.pumpWidget(testApp(profileScreen));
+      final MaterialApp app = createTestApp(profileScreen, cart: cart);
+
+      await tester.pumpWidget(app);
 
       final Finder locationFieldFinder =
           find.widgetWithText(TextField, 'Preferred Location');
@@ -65,8 +81,11 @@ void main() {
 
     testWidgets('shows validation error when location field is empty',
         (WidgetTester tester) async {
+      final Cart cart = Cart();
       const ProfileScreen profileScreen = ProfileScreen();
-      await tester.pumpWidget(testApp(profileScreen));
+      final MaterialApp app = createTestApp(profileScreen, cart: cart);
+
+      await tester.pumpWidget(app);
 
       final Finder nameFieldFinder =
           find.widgetWithText(TextField, 'Your Name');
@@ -81,8 +100,11 @@ void main() {
 
     testWidgets('shows validation error when both fields are empty',
         (WidgetTester tester) async {
+      final Cart cart = Cart();
       const ProfileScreen profileScreen = ProfileScreen();
-      await tester.pumpWidget(testApp(profileScreen));
+      final MaterialApp app = createTestApp(profileScreen, cart: cart);
+
+      await tester.pumpWidget(app);
 
       final Finder saveButtonFinder = find.text('Save Profile');
 
@@ -95,26 +117,36 @@ void main() {
     testWidgets('trims whitespace from input fields',
         (WidgetTester tester) async {
       Map<String, String>? result;
+      final Cart cart = Cart();
       const ProfileScreen profileScreen = ProfileScreen();
-      await tester.pumpWidget(testApp(
-        Builder(
-          builder: (BuildContext context) {
-            return Scaffold(
-              body: ElevatedButton(
-                onPressed: () async {
-                  result = await Navigator.push<Map<String, String>>(
-                    context,
-                    MaterialPageRoute<Map<String, String>>(
-                      builder: (BuildContext context) => profileScreen,
-                    ),
-                  );
-                },
-                child: const Text('Go to Profile'),
-              ),
-            );
-          },
+      final MaterialApp app = MaterialApp(
+        home: ChangeNotifierProvider<Cart>.value(
+          value: cart,
+          child: Builder(
+            builder: (BuildContext context) {
+              return Scaffold(
+                body: ElevatedButton(
+                  onPressed: () async {
+                    result = await Navigator.push<Map<String, String>>(
+                      context,
+                      MaterialPageRoute<Map<String, String>>(
+                        builder: (BuildContext context) =>
+                            ChangeNotifierProvider<Cart>.value(
+                          value: cart,
+                          child: profileScreen,
+                        ),
+                      ),
+                    );
+                  },
+                  child: const Text('Go to Profile'),
+                ),
+              );
+            },
+          ),
         ),
-      ));
+      );
+
+      await tester.pumpWidget(app);
       await tester.tap(find.text('Go to Profile'));
       await tester.pumpAndSettle();
 
@@ -137,26 +169,36 @@ void main() {
     testWidgets('returns profile data when both fields are filled',
         (WidgetTester tester) async {
       Map<String, String>? result;
+      final Cart cart = Cart();
       const ProfileScreen profileScreen = ProfileScreen();
-      await tester.pumpWidget(testApp(
-        Builder(
-          builder: (BuildContext context) {
-            return Scaffold(
-              body: ElevatedButton(
-                onPressed: () async {
-                  result = await Navigator.push<Map<String, String>>(
-                    context,
-                    MaterialPageRoute<Map<String, String>>(
-                      builder: (BuildContext context) => profileScreen,
-                    ),
-                  );
-                },
-                child: const Text('Go to Profile'),
-              ),
-            );
-          },
+      final MaterialApp app = MaterialApp(
+        home: ChangeNotifierProvider<Cart>.value(
+          value: cart,
+          child: Builder(
+            builder: (BuildContext context) {
+              return Scaffold(
+                body: ElevatedButton(
+                  onPressed: () async {
+                    result = await Navigator.push<Map<String, String>>(
+                      context,
+                      MaterialPageRoute<Map<String, String>>(
+                        builder: (BuildContext context) =>
+                            ChangeNotifierProvider<Cart>.value(
+                          value: cart,
+                          child: profileScreen,
+                        ),
+                      ),
+                    );
+                  },
+                  child: const Text('Go to Profile'),
+                ),
+              );
+            },
+          ),
         ),
-      ));
+      );
+
+      await tester.pumpWidget(app);
       await tester.tap(find.text('Go to Profile'));
       await tester.pumpAndSettle();
 
@@ -178,8 +220,16 @@ void main() {
 
     testWidgets('text fields have proper decoration',
         (WidgetTester tester) async {
+      final Cart cart = Cart();
       const ProfileScreen profileScreen = ProfileScreen();
-      await tester.pumpWidget(testApp(profileScreen));
+      final MaterialApp app = MaterialApp(
+        home: ChangeNotifierProvider<Cart>.value(
+          value: cart,
+          child: profileScreen,
+        ),
+      );
+
+      await tester.pumpWidget(app);
 
       final Finder nameFieldFinder =
           find.widgetWithText(TextField, 'Your Name');
@@ -197,8 +247,16 @@ void main() {
     });
 
     testWidgets('save button is always enabled', (WidgetTester tester) async {
+      final Cart cart = Cart();
       const ProfileScreen profileScreen = ProfileScreen();
-      await tester.pumpWidget(testApp(profileScreen));
+      final MaterialApp app = MaterialApp(
+        home: ChangeNotifierProvider<Cart>.value(
+          value: cart,
+          child: profileScreen,
+        ),
+      );
+
+      await tester.pumpWidget(app);
 
       final Finder saveButtonFinder = find.byType(ElevatedButton);
       final ElevatedButton saveButton =
@@ -210,26 +268,36 @@ void main() {
     testWidgets('handles special characters in input fields',
         (WidgetTester tester) async {
       Map<String, String>? result;
+      final Cart cart = Cart();
       const ProfileScreen profileScreen = ProfileScreen();
-      await tester.pumpWidget(testApp(
-        Builder(
-          builder: (BuildContext context) {
-            return Scaffold(
-              body: ElevatedButton(
-                onPressed: () async {
-                  result = await Navigator.push<Map<String, String>>(
-                    context,
-                    MaterialPageRoute<Map<String, String>>(
-                      builder: (BuildContext context) => profileScreen,
-                    ),
-                  );
-                },
-                child: const Text('Go to Profile'),
-              ),
-            );
-          },
+      final MaterialApp app = MaterialApp(
+        home: ChangeNotifierProvider<Cart>.value(
+          value: cart,
+          child: Builder(
+            builder: (BuildContext context) {
+              return Scaffold(
+                body: ElevatedButton(
+                  onPressed: () async {
+                    result = await Navigator.push<Map<String, String>>(
+                      context,
+                      MaterialPageRoute<Map<String, String>>(
+                        builder: (BuildContext context) =>
+                            ChangeNotifierProvider<Cart>.value(
+                          value: cart,
+                          child: profileScreen,
+                        ),
+                      ),
+                    );
+                  },
+                  child: const Text('Go to Profile'),
+                ),
+              );
+            },
+          ),
         ),
-      ));
+      );
+
+      await tester.pumpWidget(app);
       await tester.tap(find.text('Go to Profile'));
       await tester.pumpAndSettle();
 
@@ -251,8 +319,16 @@ void main() {
 
     testWidgets('column has correct cross axis alignment',
         (WidgetTester tester) async {
+      final Cart cart = Cart();
       const ProfileScreen profileScreen = ProfileScreen();
-      await tester.pumpWidget(testApp(profileScreen));
+      final MaterialApp app = MaterialApp(
+        home: ChangeNotifierProvider<Cart>.value(
+          value: cart,
+          child: profileScreen,
+        ),
+      );
+
+      await tester.pumpWidget(app);
 
       final Finder columnFinder = find.byType(Column);
       final Column column = tester.widget<Column>(columnFinder);
@@ -261,8 +337,16 @@ void main() {
     });
 
     testWidgets('snackbar has correct duration', (WidgetTester tester) async {
+      final Cart cart = Cart();
       const ProfileScreen profileScreen = ProfileScreen();
-      await tester.pumpWidget(testApp(profileScreen));
+      final MaterialApp app = MaterialApp(
+        home: ChangeNotifierProvider<Cart>.value(
+          value: cart,
+          child: profileScreen,
+        ),
+      );
+
+      await tester.pumpWidget(app);
 
       final Finder saveButtonFinder = find.text('Save Profile');
 
@@ -278,8 +362,16 @@ void main() {
 
     testWidgets('handles empty strings after trimming',
         (WidgetTester tester) async {
+      final Cart cart = Cart();
       const ProfileScreen profileScreen = ProfileScreen();
-      await tester.pumpWidget(testApp(profileScreen));
+      final MaterialApp app = MaterialApp(
+        home: ChangeNotifierProvider<Cart>.value(
+          value: cart,
+          child: profileScreen,
+        ),
+      );
+
+      await tester.pumpWidget(app);
 
       final Finder nameFieldFinder =
           find.widgetWithText(TextField, 'Your Name');

@@ -6,7 +6,8 @@ import 'package:sandwich_shop/models/sandwich.dart';
 import 'package:sandwich_shop/views/profile_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:sandwich_shop/views/settings_screen.dart';
-import 'package:sandwich_shop/views/common_widgets.dart';
+import 'package:sandwich_shop/views/order_history_screen.dart';
+import 'package:sandwich_shop/widgets/common_widgets.dart';
 
 class OrderScreen extends StatefulWidget {
   final int maxQuantity;
@@ -39,6 +40,15 @@ class _OrderScreenState extends State<OrderScreen> {
   void dispose() {
     _notesController.dispose();
     super.dispose();
+  }
+
+  void _navigateToSettings() {
+    Navigator.push(
+      context,
+      MaterialPageRoute<void>(
+        builder: (BuildContext context) => const SettingsScreen(),
+      ),
+    );
   }
 
   Future<void> _navigateToProfile() async {
@@ -116,6 +126,15 @@ class _OrderScreenState extends State<OrderScreen> {
     );
   }
 
+  void _navigateToOrderHistory() {
+    Navigator.push(
+      context,
+      MaterialPageRoute<void>(
+        builder: (BuildContext context) => const OrderHistoryScreen(),
+      ),
+    );
+  }
+
   List<DropdownMenuEntry<SandwichType>> _buildSandwichTypeEntries() {
     List<DropdownMenuEntry<SandwichType>> entries = [];
     for (SandwichType type in SandwichType.values) {
@@ -142,15 +161,6 @@ class _OrderScreenState extends State<OrderScreen> {
     return entries;
   }
 
-  void _navigateToSettings() {
-    Navigator.push(
-      context,
-      MaterialPageRoute<void>(
-        builder: (BuildContext context) => const SettingsScreen(),
-      ),
-    );
-  }
-
   String _getCurrentImagePath() {
     final Sandwich sandwich = Sandwich(
       type: _selectedSandwichType,
@@ -163,8 +173,26 @@ class _OrderScreenState extends State<OrderScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: const AppDrawer(),
-      appBar: buildAppBar(context, 'Sandwich Counter'),
+      appBar: CommonAppBar(
+        title: 'Sandwich Counter',
+        actions: [
+          Consumer<Cart>(
+            builder: (context, cart, child) {
+              return Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    const Icon(Icons.shopping_cart),
+                    const SizedBox(width: 4),
+                    Text('${cart.countOfItems}'),
+                  ],
+                ),
+              );
+            },
+          ),
+        ],
+      ),
       body: Center(
         child: SingleChildScrollView(
           child: Column(
@@ -268,7 +296,14 @@ class _OrderScreenState extends State<OrderScreen> {
                 icon: Icons.settings,
                 label: 'Settings',
                 backgroundColor: Colors.grey,
-              ),              
+              ),
+              const SizedBox(height: 20),
+              StyledButton(
+                onPressed: _navigateToOrderHistory,
+                icon: Icons.history,
+                label: 'Order History',
+                backgroundColor: Colors.indigo,
+              ),
               const SizedBox(height: 20),
               Consumer<Cart>(
                 builder: (context, cart, child) {
