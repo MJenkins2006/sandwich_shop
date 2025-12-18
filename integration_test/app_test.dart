@@ -136,5 +136,40 @@ void main() {
     });
 
     // Feel free to add more tests (e.g., to check saved orders, etc.)
+
+    testWidgets('saved order appears in order history', (WidgetTester tester) async {
+      app.main();
+      await tester.pumpAndSettle();
+
+      // Add one sandwich and go to checkout
+      final addToCartButton = find.widgetWithText(StyledButton, 'Add to Cart');
+      await tester.ensureVisible(addToCartButton);
+      await tester.tap(addToCartButton);
+      await tester.pumpAndSettle();
+
+      final viewCartButton = find.widgetWithText(StyledButton, 'View Cart');
+      await tester.ensureVisible(viewCartButton);
+      await tester.tap(viewCartButton);
+      await tester.pumpAndSettle();
+
+      final checkoutButton = find.widgetWithText(StyledButton, 'Checkout');
+      await tester.tap(checkoutButton);
+      await tester.pumpAndSettle();
+
+      final confirmPaymentButton = find.text('Confirm Payment');
+      await tester.tap(confirmPaymentButton);
+      await tester.pump(const Duration(seconds: 3));
+
+      // Back on order screen, open order history
+      final orderHistoryButton = find.widgetWithText(StyledButton, 'Order History');
+      await tester.ensureVisible(orderHistoryButton);
+      await tester.tap(orderHistoryButton);
+      await tester.pumpAndSettle();
+
+      // The order history should show the recently saved order and total amount
+      expect(find.text('Order History'), findsOneWidget);
+      expect(find.text('£11.00'), findsWidgets);
+      expect(find.text('1 items'), findsWidgets);
+    });
   });
 }
