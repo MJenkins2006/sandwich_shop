@@ -15,9 +15,17 @@ dependencies:
   shared_preferences: ^2.5.3
   sqflite: ^2.4.2
   path: ^1.9.1
-
+  sqflite_common_ffi: ^2.3.0
+  
+# `sqflite_common_ffi` is required at runtime on desktop to provide
+# a sqlite implementation for `sqflite` when running on Windows,
+# macOS, or Linux. It must also be available in `dependencies` so
+# the package is included in release builds for desktop targets.
 dev_dependencies:
   flutter_test:
+    sdk: flutter
+
+  integration_test:
     sdk: flutter
 
   flutter_lints: ^2.0.0
