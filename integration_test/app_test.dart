@@ -203,6 +203,27 @@ void main() {
       expect(welcomeMessage, findsOneWidget);
     });
 
+    testWidgets('profile validation shows error when fields empty', (WidgetTester tester) async {
+      app.main();
+      await tester.pumpAndSettle();
+
+      // Open Profile screen
+      final profileButton = find.widgetWithText(StyledButton, 'Profile');
+      await tester.ensureVisible(profileButton);
+      await tester.tap(profileButton);
+      await tester.pumpAndSettle();
+
+      // Tap Save without entering any text
+      final saveButton = find.widgetWithText(ElevatedButton, 'Save Profile');
+      await tester.ensureVisible(saveButton);
+      await tester.tap(saveButton);
+      await tester.pumpAndSettle();
+
+      // Expect validation snackbar
+      await tester.pump(const Duration(milliseconds: 300));
+      expect(find.text('Please fill in all fields'), findsOneWidget);
+    });
+
     testWidgets('settings slider updates current size', (WidgetTester tester) async {
       app.main();
       await tester.pumpAndSettle();
