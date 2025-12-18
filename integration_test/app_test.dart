@@ -202,5 +202,32 @@ void main() {
       await tester.pump(const Duration(milliseconds: 500));
       expect(welcomeMessage, findsOneWidget);
     });
+
+    testWidgets('settings slider updates current size', (WidgetTester tester) async {
+      app.main();
+      await tester.pumpAndSettle();
+
+      // Open Settings screen
+      final settingsButton = find.widgetWithText(StyledButton, 'Settings');
+      await tester.ensureVisible(settingsButton);
+      await tester.tap(settingsButton);
+      await tester.pumpAndSettle();
+
+      // Should show Settings header and current size text
+      expect(find.text('Settings'), findsOneWidget);
+      final currentSizeText = find.textContaining('Current size:');
+      expect(currentSizeText, findsOneWidget);
+
+      // Drag the slider to increase size
+      final slider = find.byType(Slider);
+      expect(slider, findsOneWidget);
+
+      // Drag to the right to increase value; a positive dx moves the thumb
+      await tester.drag(slider, const Offset(120, 0));
+      await tester.pumpAndSettle();
+
+      // The current size should no longer be the default 16px
+      expect(find.text('Current size: 16px'), findsNothing);
+    });
   });
 }
