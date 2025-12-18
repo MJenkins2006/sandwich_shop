@@ -171,5 +171,36 @@ void main() {
       expect(find.text('£11.00'), findsWidgets);
       expect(find.text('1 items'), findsWidgets);
     });
+
+    testWidgets('profile save shows welcome message', (WidgetTester tester) async {
+      app.main();
+      await tester.pumpAndSettle();
+
+      // Open Profile screen
+      final profileButton = find.widgetWithText(StyledButton, 'Profile');
+      await tester.ensureVisible(profileButton);
+      await tester.tap(profileButton);
+      await tester.pumpAndSettle();
+
+      // Fill in name and location
+      final nameField = find.byType(TextField).at(0);
+      final locationField = find.byType(TextField).at(1);
+
+      await tester.enterText(nameField, 'Alice');
+      await tester.enterText(locationField, 'Downtown');
+      await tester.pumpAndSettle();
+
+      // Save profile
+      final saveButton = find.widgetWithText(ElevatedButton, 'Save Profile');
+      await tester.ensureVisible(saveButton);
+      await tester.tap(saveButton);
+      await tester.pumpAndSettle();
+
+      // Expect welcome snackbar on Order screen
+      final welcomeMessage = find.text('Welcome, Alice! Ordering from Downtown');
+      // SnackBar may be transient; give it a short time to appear
+      await tester.pump(const Duration(milliseconds: 500));
+      expect(welcomeMessage, findsOneWidget);
+    });
   });
 }
