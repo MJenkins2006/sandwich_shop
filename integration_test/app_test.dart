@@ -73,6 +73,33 @@ void main() {
       expect(find.text('Chicken Teriyaki'), findsOneWidget);
     });
 
+    testWidgets('change sandwich length and add to cart',
+        (WidgetTester tester) async {
+      app.main();
+      await tester.pumpAndSettle();
+
+      final lengthSwitch = find.byType(Switch);
+      await tester.tap(lengthSwitch);
+      await tester.pumpAndSettle();
+
+      final addToCartButton = find.widgetWithText(StyledButton, 'Add to Cart');
+      await tester.ensureVisible(addToCartButton);
+      await tester.pumpAndSettle();
+
+      await tester.tap(addToCartButton);
+      await tester.pumpAndSettle();
+
+      final viewCartButton = find.widgetWithText(StyledButton, 'View Cart');
+      await tester.ensureVisible(viewCartButton);
+      await tester.pumpAndSettle();
+
+      await tester.tap(viewCartButton);
+      await tester.pumpAndSettle();
+
+      expect(find.text('Cart'), findsOneWidget);
+      expect(find.text('£7.00'), findsOneWidget);
+    });
+
     testWidgets('modify quantity and add to cart', (WidgetTester tester) async {
       app.main();
       await tester.pumpAndSettle();
