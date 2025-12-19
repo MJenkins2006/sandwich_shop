@@ -6,7 +6,7 @@ browsers, mobile, and desktop targets.
 
 **Quick read:** clone the repo, run `flutter pub get`, then `flutter run`.
 
-![Welcome screen screenshot](images/screenshot_welcome_to_sandwich_shop.jpg)
+![Welcome screen screenshot](assets/images/home_screen.png)
 
 **Features**
 - **Ordering flow**: browse menu, add items to a cart, and checkout.
