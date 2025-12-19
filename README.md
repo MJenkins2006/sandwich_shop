@@ -1,76 +1,51 @@
 # Sandwich Shop
 
-This is a simple Flutter app that allows users to order sandwiches.
-The app is built using Flutter and Dart, and it is designed primarily to be run in a web
-browser.
+A small Flutter app for ordering sandwiches — a demo shop that showcases
+state management, a lightweight repository layer, and a simple UI for
+browsers, mobile, and desktop targets.
 
-## Install the essential tools
+**Quick read:** clone the repo, run `flutter pub get`, then `flutter run`.
 
-1. **Terminal**:
+![Welcome screen screenshot](images/screenshot_welcome_to_sandwich_shop.jpg)
 
-    - **macOS** – use the built-in Terminal app by pressing **⌘ + Space**, typing **Terminal**, and pressing **Return**.
-    - **Windows** – open the start menu using the **Windows** key. Then enter **cmd** to open the **Command Prompt**. Alternatively, you can use **Windows PowerShell** or **Windows Terminal**.
+**Features**
+- **Ordering flow**: browse menu, add items to a cart, and checkout.
+- **Persistence**: saves orders locally using the app's `services` layer.
+- **Modular layout**: `models`, `repositories`, `services`, `views`, and `widgets`.
 
-2. **Git** – verify that you have `git` installed by entering `git --version`, in the terminal.
-    If this is missing, download the installer from [Git's official site](https://git-scm.com/downloads?utm_source=chatgpt.com).
+**Prerequisites**
+- **Flutter SDK**: install and verify with `flutter doctor`.
+- **Dart SDK**: comes with Flutter; ensure versions match your Flutter channel.
+- **A device or emulator**: browser (Chrome), mobile device, or desktop target.
 
-3. **Package managers**:
+**Getting started**
+- **Clone**: `git clone <repo-url>` then `cd sandwich_shop`.
+- **Install deps**: `flutter pub get`.
+- **Run (default)**: `flutter run` (choose a device when prompted).
+- **Run for web**: `flutter run -d chrome`.
+- **Run for Windows/macOS/Linux**: `flutter run -d windows` (or `-d macos` / `-d linux`).
 
-    - **Homebrew** (macOS) – verify that you have `brew` installed with `brew --version`; if missing, follow the instructions on the [Homebrew installation page](https://brew.sh/).
-    - **Chocolatey** (Windows) – verify that you have `choco` installed with `choco --version`; if missing, follow the instructions on the [Chocolatey installation page](https://chocolatey.org/install).
+**Tests**
+- **Unit & widget tests**: `flutter test` (runs tests under `test/`).
+- **Integration tests**: look in `integration_test/` and run with Flutter's
+    integration testing tooling (example: `flutter drive` or `flutter test integration_test`).
 
-4. **Flutter SDK** – verify that you have `flutter` installed and it is working with `flutter doctor`; if missing, install it using your package manager:
+**Project structure (top-level)**
+- `lib/`: application source code
+    - `main.dart`: app entrypoint
+    - `models/`: data models (e.g., `sandwich.dart`, `cart.dart`)
+    - `repositories/`: pricing and data access
+    - `services/`: platform services (database, persistence)
+    - `views/` and `widgets/`: UI screens and reusable widgets
+- `assets/` and `images/`: media and static assets
+- `test/`: unit & widget tests
+- `integration_test/`: end-to-end tests
 
-    - **macOS**: `brew install --cask flutter`
-    - **Windows**: `choco install flutter`
+**Common tasks**
+- Get dependencies: `flutter pub get`.
+- Run app: `flutter run` or target a device with `-d`.
+- Run tests: `flutter test`.
+- Format code: `dart format .`.
 
-5. **Visual Studio Code** – verify that you have `code` installed with `code --version`; if missing, use your package manager to install it:
-
-    - **macOS**: `brew install --cask visual-studio-code`
-    - **Windows**: `choco install vscode`
-
-## Get the code
-
-### If this is your first time working on this project
-
-Enter the following commands in your terminal to clone the repository and
-open it in Visual Studio Code.
-You may want to change directory (`cd`) to the directory where you want to clone the
-repository first.
-
-```bash
-git clone --branch 8 https://github.com/manighahrmani/sandwich_shop
-cd sandwich_shop
-code .
-```
-
-### If you have already cloned the repository
-
-Enter the following commands in your terminal to switch to the correct branch.
-Remember to `cd` to the directory where you cloned the repository first.
-
-```bash
-git fetch origin
-git checkout 8
-```
-
-## Run the app
-
-Open the integrated terminal in Visual Studio Code by first opening the Command
-Palette with **⌘ + Shift + P** (macOS) or **Ctrl + Shift + P** (Windows) and
-typing **Terminal: Create New Terminal** then pressing **Enter**.
-
-In the terminal, run the following commands to install the dependencies and run
-the app in your web browser:
-
-```bash
-flutter pub get
-flutter run
-```
-
-## Get support
-
-Use [the dedicated Discord channel](https://discord.com/channels/760155974467059762/1370633732779933806)
-to ask your questions and get help from the community.
-Please provide as much context as possible, including the error messages you are seeing and
-screenshots (you can open Discord in your web browser).
+**Issues**
+- Open issues in the repository for bugs or requested features.
